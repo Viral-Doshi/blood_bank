@@ -57,7 +57,7 @@
                 </div>
               </div>
               <!-- form -->
-              <form action="/admin/add-people" method="post">
+              <form autocomplete="off" action="/admin/add-people" method="post">
                 <table class="table table-striped record">
                   <tr>
                     <td>Full Name</td>
@@ -86,18 +86,18 @@
                   </tr>
                   <tr>
                     <td>Email-ID</td>
-                    <td><input type="text" size="40" name="email" placeholder="Email" required></td>
+                    <td><input type="email" size="40" name="email" placeholder="Email" autocomplete="off" required></td>
                   </tr>
                   <tr>
                     <tr>
                       <td>Password</td>
-                      <td><input type="password" name="password" size="40" placeholder="password" required></td>
+                      <td><input type="password" name="password" size="40" placeholder="password" autocomplete="new-password" required></td>
                     </tr>
                     <td>OTP Verification</td>
                     <td>
-                      <input type="radio" id="yes" name="otp" value="yes">
+                      <input type="radio" id="yes" name="otp" value="1">
                       <label for="yes" class="mr-50">Yes</label>
-                      <input type="radio" id="no" name="otp" value="no">
+                      <input type="radio" id="no" name="otp" value="0">
                       <label for="no">No</label>
                     </td>
                   </tr>
@@ -105,22 +105,22 @@
                     <td>User Type</td>
                     <td>
                       <input type="radio" id="user_type" name="user_type" value="normal" checked>
-                      <label for="normal" class="mr-50">normal</label>
-        
+                      <label for="normal" class="mr-50">Normal</label>
+
                       <input type="radio" id="user_type" name="user_type" value="data-entry">
                       <label for="data-entry" class="mr-50">Data-Entry</label>
                       <input type="radio" id="user_type" name="user_type" value="admin">
                       <label for="admin" class="mr-50">Admin</label>
                     </td>
                   </tr>
-                  <tr>
+                  <!-- <tr>
                     <td>Height</td>
                     <td><input type="text" size="15" placeholder="Height (in cms)"></td>
                   </tr>
                   <tr>
                     <td>Weight</td>
                     <td><input type="text" size="15" placeholder="Weight (in kgs)"></td>
-                  </tr>
+                  </tr> -->
                 </table>
                 <div class="container">
                  <div class="row justify-content-between">

@@ -154,17 +154,14 @@
                             <div class="row">
                                 <!-- Button -->
                                 <div class="container">
-                                  <div class="row justify-content-center">
-                                      <%if(wrong){%>
-                                        <p>Wrong password or email</p>
-                                        <br>
-                                        <br>
-
-                                        <%}%>
-                                      <div class="col-lg-4 col-md-12 col-xs-12">
-                                          <button type="submit" class="btn header-btn">Log In</button>
-                                      </div>
-                                  </div>
+									<%if(wrong){%>
+										<div class="row justify-content-center alert alert-danger" role="alert">
+                                        	Wrong password or email
+										</div>
+									<%}%>
+                                  	<div class="row justify-content-center">
+                                    	<button type="submit" class="btn header-btn">Log In</button>
+                                  	</div>
                                 </div>
                                 <!-- Button-End -->
                             </div>

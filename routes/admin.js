@@ -39,7 +39,7 @@ router.post("/add-people", checkIfPersonExists, async (req, res) => {
     phone_number: req.body.phone,
     email: req.body.email,
     password: req.body.password,
-    verified: 0,
+    verified: req.body.otp,
     gender: req.body.gender,
     user_type: req.body.user_type,
   };

@@ -145,12 +145,14 @@ router.post("/edit-people", async (req, res) => {
 
   if(req.body.submit=='update'){
       await db.query(
-          "UPDATE people SET full_name=?,blood_group=?,DOB=?,verified=? WHERE PID=? ;",
+          "UPDATE people SET full_name=?,blood_group=?,DOB=?,gender=?,verified=?,user_type=? WHERE PID=? ;",
           [
             req.body.full_name,
             req.body.blood_group,
             req.body.dob,
+            req.body.gender,
             req.body.otp,
+            req.body.user_type,
             req.body.PID,
           ],
           function (error, results, fields) {
@@ -162,10 +164,12 @@ router.post("/edit-people", async (req, res) => {
 
               console.log("Rows affected:", results.affectedRows);
                db.query(
-                "UPDATE donor SET height=?,weight=? WHERE PID=? ;",
+                "UPDATE donor SET height=?,weight=?,next_donation_date=?,previous_sms_date=? WHERE PID=? ;",
                 [
                   req.body.height,
-                  req.body.weight,                  
+                  req.body.weight,
+                  req.body.next_donation_date,
+                  req.body.previous_sms_date,
                   req.body.PID,
                 ],
                 function (error, results, fields) {
@@ -179,7 +183,7 @@ router.post("/edit-people", async (req, res) => {
                   }
                 }
               );
-            
+
             }
           }
         );

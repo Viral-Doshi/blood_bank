@@ -57,7 +57,7 @@
                             </div>
                         </div>
                         <!-- form -->
-                        <form action="/edit/edit-people" method="post">
+                        <form autocomplete="off" action="/edit/edit-people" method="post">
                           <input type="hidden" style="width:500px;" name="PID" value="<%=peoples[0].PID%>"   >
                             <table class="table table-striped record">
                               <tr>
@@ -74,18 +74,26 @@
                               </tr>
                               <tr>
                                 <td>Blood Group</td>
-                                <td><input type="text" size="10" name="blood_group" placeholder="Blood Group" value="<%=peoples[0].blood_group%>" required disabled class="editable"></td>
+                                <td>
+									<input type="text" size="10" name="blood_group" placeholder="Blood Group" value="<%=peoples[0].blood_group%>" pattern="(A|B|AB|O)[+-]" title="Select a valid Blood Group" required disabled class="editable">
+								</td>
                               </tr>
                               <tr>
                                 <td>Date Of Birth</td>
-                                <td><input type="date" size="10" name="dob" value="<%=peoples[0].DOB%>" required disabled class="editable"></td>
+                                <td><input type="date" size="10" name="dob" value="<%=peoples[0].DOB.getFullYear()%>-<%=('0'+(peoples[0].DOB.getMonth()+1)).slice(-2)%>-<%=('0'+(peoples[0].DOB.getDate())).slice(-2)%>" required disabled class="editable"></td>
                               </tr>
                               <tr>
                                 <td>Gender</td>
                                 <td>
-
-                                  <label for="male"  class="mr-50"><%=peoples[0].gender%></label>
-
+								  <input id="gender-male" type="radio" name="gender" value="male" disabled class="editable">
+                                  <label for="gender-male" class="mr-50">Male</label>
+                                  <input id="gender-female" type="radio" name="gender" value="female" disabled class="editable">
+                                  <label for="gender-female">Female</label>
+								  <%if(peoples[0].gender=="male"){%>
+									  <script>document.getElementById("gender-male").checked = "true";</script>
+								  <%}else {%>
+									  <script>document.getElementById("gender-female").checked = "true";</script>
+								  <%}%>
                                 </td>
                               </tr>
                               <tr>
@@ -93,58 +101,84 @@
                                 <td><%=peoples[0].email%></td>
                               </tr>
                               <tr>
-                                <td>Password</td>
-                                <td>*********</td>
-                              </tr>
-                              <tr>
                                 <td>OTP Verification</td>
                                 <td>
-                                  <input type="radio" id="yes" name="otp" value="1" disabled class="editable">
-                                  <label for="yes" class="mr-50">Yes</label>
-                                  <input type="radio" id="no" name="otp" value="0" checked disabled class="editable">
-                                  <label for="no">No</label>
+                                  <input id="otp-yes" type="radio" name="otp" value="1" disabled class="editable" />
+                                  <label for="otp-yes" class="mr-50">Yes</label>
+                                  <input id="otp-no" type="radio" name="otp" value="0" disabled class="editable" />
+                                  <label for="otp-no">No</label>
+								  <%if(peoples[0].verified == 1){%>
+									  <script>document.getElementById("otp-yes").checked = "true";</script>
+								  <%}else {%>
+									  <script>document.getElementById("otp-no").checked = "true";</script>
+								  <%}%>
                                 </td>
                               </tr>
                               <tr>
                                 <td>User Type</td>
                                 <td>
-                                  <%=peoples[0].user_type%>
-
+								  <input id="user-admin" type="radio" name="user_type" value="admin" disabled class="editable">
+                                  <label for="user-admin" class="mr-50">Admin</label>
+                                  <input id="user-data-entry" type="radio" name="user_type" value="data-entry" disabled class="editable">
+                                  <label for="user-data-entry" class="mr-50">Data-Entry</label>
+								  <input id="user-normal" type="radio" name="user_type" value="normal" disabled class="editable">
+                                  <label for="user-normal">Normal</label>
+								  <%if(peoples[0].user_type == "normal"){%>
+									  <script>document.getElementById("user-normal").checked = "true";</script>
+								  <%}else if(peoples[0].user_type == "data-entry"){%>
+									  <script>document.getElementById("user-data-entry").checked = "true";</script>
+								  <%}else {%>
+									  <script>document.getElementById("user-admin").checked = "true";</script>
+								  <%}%>
                                 </td>
                               </tr>
+							  <%if(peoples[0].isdonor) {%>
                               <tr>
                                 <td>Height</td>
-                                <td><input type="text" name="height" size="50" placeholder="Height (in cms)" value="170" required disabled class="editable"></td>
-                              </tr>
+                                <td><input type="text" name="height" size="15" placeholder="Height (in cms)" value="<%peoples[0].height%>" required disabled class="editable"></td>
+							  </tr>
                               <tr>
-                                <td>Weight</td>
-                                <td><input type="text" name="weight" size="50" placeholder="Weight (in kgs)" value="72" required disabled class="editable"></td>
-                              </tr>
+								<td>Weight</td>
+								<td><input type="text" name="weight" size="15" placeholder="Weight (in kgs)" value="<%=peoples[0].weight%>" required disabled class="editable"></td>
+							  </tr>
                               <tr>
                                 <td>Next Safe Donation</td>
-                                <td><input type="date" size="10" value="2001-06-23" required disabled class="editable"></td>
-                              </tr>
+                                <td><input type="date" size="10" value="<%=peoples[0].next_donation_date.getFullYear()%>-<%=('0'+(peoples[0].next_donation_date.getMonth()+1)).slice(-2)%>-<%=('0'+(peoples[0].next_donation_date.getDate())).slice(-2)%>" required disabled class="editable"></td>
+							  </tr>
                               <tr>
                                 <td>Previous Notified</td>
-                                <td><input type="date" size="10" value="2020-08-23" placeholder="19-06-2001" required disabled class="editable"></td>
-                              </tr>
+                                <td><input type="date" size="10" value="<%=peoples[0].previous_sms_date.getFullYear()%>-<%=('0'+(peoples[0].previous_sms_date.getMonth()+1)).slice(-2)%>-<%=('0'+(peoples[0].previous_sms_date.getDate())).slice(-2)%>" required disabled class="editable"></td>
+							  </tr>
+							  <%} else {%>
+							  <tr>
+								<td colspan="2">User never Donated Blood, Height,Weight is not Available</td>
+							  </tr>
+							  <%}%>
                               <tr>
                                 <td>Previous Donations</td>
-                                <td><a href = "#">link to donations</a></td>
+								<%if(peoples[0].isdonor) {%>
+                                	<td><a href = "#">link to donations</a></td>
+								<%} else {%>
+                                	<td>Never Donated</td>
+								<%}%>
                               </tr>
 							  <tr>
                                 <td>Previous Requests</td>
-                                <td><a href = "#">link to requests</a></td>
+								<%if(peoples[0].isdonor) {%>
+                                	<td><a href = "#">link to requests</a></td>
+								<%} else {%>
+                                	<td>Never Requested</td>
+								<%}%>
                               </tr>
                             </table>
-														<div class="container">
-															<div class="row justify-content-between">
-																<button type="button" onclick="edit_btn()" class="genric-btn info circle" id="btn-edit">Edit</button>
-																<button type="submit" name="submit" value="update" onclick="return confirm('Do you really want to update?');" class="genric-btn info" id="btn-update">Update</button>
-																<button type="submit" name="submit" value="delete" onclick="return confirm('Do you really want to delete?');" class="genric-btn danger" id="btn-delete">Delete</button>
-																<button type="button" onclick="cancel_btn()" class="genric-btn info" id="btn-cancel">Cancel</button>
-															</div>
-														</div>
+							<div class="container">
+								<div class="row justify-content-between">
+									<button type="button" onclick="edit_btn()" class="genric-btn info circle" id="btn-edit">Edit</button>
+									<button type="button" onclick="cancel_btn()" class="genric-btn info" id="btn-cancel">Cancel</button>
+									<button type="submit" name="submit" value="update" onclick="return confirm('Do you really want to update?');" class="genric-btn info" id="btn-update">Update</button>
+									<button type="submit" name="submit" value="delete" onclick="return confirm('Do you really want to delete?');" class="genric-btn danger" id="btn-delete">Delete</button>
+								</div>
+							</div>
                         </form>
                     </div>
                 </div>

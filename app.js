@@ -381,7 +381,14 @@ app.get(
   async (req, res) => {
     var pid = req.params["id"];
     await db.query(
-      "SELECT * FROM people WHERE PID=?",
+      `SELECT people.*, height, weight, next_donation_date, previous_sms_date,
+      CASE
+        WHEN donor.PID IS NULL THEN false
+        ELSE true
+      END AS isdonor
+      FROM people
+      LEFT JOIN donor ON people.PID=donor.PID
+      WHERE people.PID=?`,
       pid,
       function (error, result, fields) {
         if (error) {
@@ -441,7 +448,7 @@ app.get(
             res.redirect("/admin/admin-donation.html");
           }
           else{
-            
+
             console.log(result);
             res.render("admin/full-donation", {
               logged:req.session.admin,
