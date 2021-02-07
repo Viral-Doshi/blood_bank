@@ -9,19 +9,19 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 
 	<!-- CSS here -->
-	<link rel="stylesheet" href="../assets/css/bootstrap.min.css">
-	<link rel="stylesheet" href="../assets/css/owl.carousel.min.css">
-	<link rel="stylesheet" href="../assets/css/slicknav.css">
-	<link rel="stylesheet" href="../assets/css/animate.min.css">
-	<link rel="stylesheet" href="../assets/css/magnific-popup.css">
-	<link rel="stylesheet" href="../assets/css/fontawesome-all.min.css">
-	<link rel="stylesheet" href="../assets/css/themify-icons.css">
-	<link rel="stylesheet" href="../assets/css/slick.css">
-	<link rel="stylesheet" href="../assets/css/nice-select.css">
-	<link rel="stylesheet" href="../assets/css/style.css">
+	<link rel="stylesheet" href="../../assets/css/bootstrap.min.css">
+	<link rel="stylesheet" href="../../assets/css/owl.carousel.min.css">
+	<link rel="stylesheet" href="../../assets/css/slicknav.css">
+	<link rel="stylesheet" href="../../assets/css/animate.min.css">
+	<link rel="stylesheet" href="../../assets/css/magnific-popup.css">
+	<link rel="stylesheet" href="../../assets/css/fontawesome-all.min.css">
+	<link rel="stylesheet" href="../../assets/css/themify-icons.css">
+	<link rel="stylesheet" href="../../assets/css/slick.css">
+	<link rel="stylesheet" href="../../assets/css/nice-select.css">
+	<link rel="stylesheet" href="../../assets/css/style.css">
 	<!-- special file -->
-	<link rel="stylesheet" href="../assets/css/login-form.css">
-	<link rel="stylesheet" href="../assets/css/request-style.css">
+	<link rel="stylesheet" href="../../assets/css/login-form.css">
+	<link rel="stylesheet" href="../../assets/css/request-style.css">
 </head>
 
 <body>
@@ -31,7 +31,7 @@
 			<div class="preloader-inner position-relative">
 				<div class="preloader-circle"></div>
 				<div class="preloader-img pere-text">
-					<img src="../assets/img/logo/loder.jpg" alt="">
+					<img src="../../assets/img/logo/loder.jpg" alt="">
 				</div>
 			</div>
 		</div>
@@ -121,24 +121,23 @@
 					<table class="table table-striped record">
 						<!-- start displaying records -->
 						<!-- Stored Blood Bags -->
+						<%for(var i=0;i<blood_bag.length;i++){%>
 						<tr>
-							<td><a href="full-bloodbag.html" class="r-status-acc">Available</a></td>
-							<td>Blood Group</td>
-							<td class="bold">Donation Date : 01-Jan-2021</td>
+							<%if(blood_bag[i].available==1){%>
+							<td><a href="/admin/full-bloodbag.html/<%=blood_bag[i].BBID%>" class="r-status-acc">Available</a></td>
+							<%}%>
+							<% if(blood_bag[i].donated==1){%>
+								<td><a href="/admin/full-bloodbag.html/<%=blood_bag[i].BBID%>" class="r-status-new">supplied</a></td>
+								<%}%>
+								<%if(blood_bag[i].rejected==1){%>
+									<td><a href="/admin/full-bloodbag.html/<%=blood_bag[i].BBID%>" class="r-status-rej">Discarded</a></td>
+									<%}%>	
+							<td><%=blood_bag[i].blood_group%></td>
+							<td class="bold"><%=('0'+(blood_bag[i].donation_date.getDate())).slice(-2)%>-<%=('0'+(blood_bag[i].donation_date.getMonth()+1)).slice(-2)%>-<%=blood_bag[i].donation_date.getFullYear()%></td>
 						</tr>
-						<!-- Recevied Blood Bags -->
-						<tr>
-							<!-- pass the requestID to full-request.html which will than show every details of record -->
-							<td><a href="full-bloodbag.html" class="r-status-new">Supplied</a></td>
-							<td>Blood Group</td>
-							<td class="bold">Donation Date : 01-Jan-2021</td>
-						</tr>
-						<!-- Rejected Blood Bags -->
-						<tr>
-							<td><a href="full-bloodbag.html" class="r-status-rej">Discarded</a></td>
-							<td>Blood Group</td>
-							<td class="bold">Donation Date : 01-Jan-2021</td>
-						</tr>
+						
+						
+						<%}%>
 					</table>
 					<!-- All records ends here -->
 				</div>
@@ -149,39 +148,39 @@
 	</footer>
 
 	<!-- JS here -->
-	<script src="../assets/js/plain-header-admin.txt" language="javascript" type="text/javascript"></script>
-	<script src="../assets/js/footer-admin.txt" language="javascript" type="text/javascript"></script>
+	<script src="../../assets/js/plain-header-admin.txt" language="javascript" type="text/javascript"></script>
+	<script src="../../assets/js/footer-admin.txt" language="javascript" type="text/javascript"></script>
 	<!-- All JS Custom Plugins Link Here here -->
-	<script src="../assets/js/vendor/modernizr-3.5.0.min.js"></script>
+	<script src="../../assets/js/vendor/modernizr-3.5.0.min.js"></script>
 	<!-- Jquery, Popper, Bootstrap -->
-	<script src="../assets/js/vendor/jquery-1.12.4.min.js"></script>
-	<script src="../assets/js/popper.min.js"></script>
-	<script src="../assets/js/bootstrap.min.js"></script>
+	<script src="../../assets/js/vendor/jquery-1.12.4.min.js"></script>
+	<script src="../../assets/js/popper.min.js"></script>
+	<script src="../../assets/js/bootstrap.min.js"></script>
 	<!-- Jquery Mobile Menu -->
-	<script src="../assets/js/jquery.slicknav.min.js"></script>
+	<script src="../../assets/js/jquery.slicknav.min.js"></script>
 
 	<!-- Jquery Slick , Owl-Carousel Plugins -->
-	<script src="../assets/js/owl.carousel.min.js"></script>
-	<script src="../assets/js/slick.min.js"></script>
+	<script src="../../assets/js/owl.carousel.min.js"></script>
+	<script src="../../assets/js/slick.min.js"></script>
 	<!-- One Page, Animated-HeadLin -->
-	<script src="../assets/js/wow.min.js"></script>
-	<script src="../assets/js/animated.headline.js"></script>
-	<script src="../assets/js/jquery.magnific-popup.js"></script>
+	<script src="../../assets/js/wow.min.js"></script>
+	<script src="../../assets/js/animated.headline.js"></script>
+	<script src="../../assets/js/jquery.magnific-popup.js"></script>
 
 	<!-- Nice-select, sticky -->
-	<script src="../assets/js/jquery.nice-select.min.js"></script>
-	<script src="../assets/js/jquery.sticky.js"></script>
+	<script src="../../assets/js/jquery.nice-select.min.js"></script>
+	<script src="../../assets/js/jquery.sticky.js"></script>
 
 	<!-- contact js -->
-	<script src="../assets/js/contact.js"></script>
-	<script src="../assets/js/jquery.form.js"></script>
-	<script src="../assets/js/jquery.validate.min.js"></script>
-	<script src="../assets/js/mail-script.js"></script>
-	<script src="../assets/js/jquery.ajaxchimp.min.js"></script>
+	<script src="../../assets/js/contact.js"></script>
+	<script src="../../assets/js/jquery.form.js"></script>
+	<script src="../../assets/js/jquery.validate.min.js"></script>
+	<script src="../../assets/js/mail-script.js"></script>
+	<script src="../../assets/js/jquery.ajaxchimp.min.js"></script>
 
 	<!-- Jquery Plugins, main Jquery -->
-	<script src="../assets/js/plugins.js"></script>
-	<script src="../assets/js/main.js"></script>
+	<script src="../../assets/js/plugins.js"></script>
+	<script src="../../assets/js/main.js"></script>
 
 </body>
 </html>

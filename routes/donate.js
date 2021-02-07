@@ -37,8 +37,10 @@ router.post("/search", getPid, async (req, res) => {
           if (result[0].donation_step == 1) res.redirect("/pretest-step2.html");
           else if (result[0].donation_step == 2) {
             req.session.did = result[0].DID;
+            req.session.blood_group=result[0].blood_type;
             res.redirect("/donation-step3.html");
           } else {
+            
             res.redirect("/data-entry");
           }
         }
@@ -125,12 +127,15 @@ router.post("/registeration-step1", getPid, (req, res) => {
 
 router.post("/pretest-step2", async (req, res) => {
   p = req.session.pid;
+  var d_step=2;
+  if(req.body.hg_level == 0 ||req.body.bp_level ==0 || req.body.temp_level==0  )
+  d_step=-1;
   var users = {
     PID: p,
     blood_test1: req.body.hg_level,
     blood_test2: req.body.bp_level,
     blood_test3: req.body.temp_level,
-    donation_step: 2,
+    donation_step: d_step,
   };
 
   await db.query(
@@ -158,10 +163,11 @@ router.post("/pretest-step2", async (req, res) => {
 router.post("/final", async (req, res) => {
   var bloodbag = {
     BBID: req.body.BBID,
-    BLID: null,
+    BLID: 3,
     available: 1,
     rejected: 0,
     Donated: 0,
+    blood_group:req.session.blood_group,
   };
 
   await db.query(

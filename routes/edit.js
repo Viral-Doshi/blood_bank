@@ -61,7 +61,7 @@ router.post("/edit-donation", async (req, res) => {
         req.body.blood_test1,
         req.body.blood_test2,
         req.body.blood_test3,
-        req.session.DID,
+        req.body.DID,
       ],
       function (error, results, fields) {
         if (error) {
@@ -77,7 +77,7 @@ router.post("/edit-donation", async (req, res) => {
   } else {
     await db.query(
       "DELETE FROM donation_record WHERE DID=?",
-      req.session.DID,
+      req.body.DID,
       function (error, results, fields) {
         if (error) {
           console.log(error);
@@ -210,5 +210,47 @@ router.post("/edit-people", async (req, res) => {
 
 
 } ) ;
+
+router.post("/received", async (req, res) => {
+  console.log(req.body);
+  var record={
+    REID:req.body.REID,
+    received_date:req.body.received_date,
+    amount:req.body.amount,
+    BBID:req.body.BBID,
+    blood_group:req.body.blood_group,
+  }
+  
+  db.query(
+    "UPDATE blood_bag SET available=0,donated=1 WHERE BBID=? ;",
+    req.body.BBID,
+    function (error, results, fields) {
+      if (error) {
+        console.log(error);
+        res.send("error");
+      } else {
+        console.log("here at update in people ");
+        console.log("Rows affected:", results.affectedRows);
+        
+      }
+    }
+  );
+
+   db.query(
+    "INSERT INTO received_record SET  ?",
+    record,
+    function (error, results, fields) {
+      if (error) {
+        console.log(error);
+        res.send("error");
+      } else {
+        console.log("insert in received record ");
+        console.log("Rows affected:", results.affectedRows);
+        res.redirect(`/admin/received-record.html/${req.body.REID}`);
+      }
+    }
+  );
+  
+});
 
 module.exports = router;

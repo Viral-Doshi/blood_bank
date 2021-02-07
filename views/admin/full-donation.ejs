@@ -58,6 +58,7 @@
                             </div>
                             <!-- form -->
                             <form action="/edit/edit-donation" method="post">
+                                <input type="hidden" style="width:500px;" name="DID" value="<%=DID%>"   >
                                 <table class="table table-striped record">
                                     <tr>
                                         <td>Donation Number</td>
@@ -104,8 +105,8 @@
                                     <div class="row justify-content-between">
                                         <button type="button" onclick="edit_btn()" class="genric-btn info circle" id="btn-edit">Edit</button>
                                         <button type="button" onclick="cancel_btn()" class="genric-btn info" id="btn-cancel">Cancel</button>
-                                        <button type="button" onclick="update_btn()" class="genric-btn info" id="btn-update">Update</button>
-                                        <button type="button" onclick="delete_btn()" class="genric-btn danger" id="btn-delete">Delete</button>
+                                        <button type="submit"name="submit" value="update" onclick="return confirm('Do you really want to update?');" class="genric-btn info" id="btn-update">Update</button>
+                                        <button type="submit" name="submit" value="delete" onclick="return confirm('Do you really want to delete?');" class="genric-btn danger" id="btn-delete">Delete</button>
                                     </div>
                                 </div>
                             </form>

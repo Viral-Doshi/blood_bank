@@ -9,19 +9,19 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 
 	<!-- CSS here -->
-	<link rel="stylesheet" href="../assets/css/bootstrap.min.css">
-	<link rel="stylesheet" href="../assets/css/owl.carousel.min.css">
-	<link rel="stylesheet" href="../assets/css/slicknav.css">
-	<link rel="stylesheet" href="../assets/css/animate.min.css">
-	<link rel="stylesheet" href="../assets/css/magnific-popup.css">
-	<link rel="stylesheet" href="../assets/css/fontawesome-all.min.css">
-	<link rel="stylesheet" href="../assets/css/themify-icons.css">
-	<link rel="stylesheet" href="../assets/css/slick.css">
-	<link rel="stylesheet" href="../assets/css/nice-select.css">
-	<link rel="stylesheet" href="../assets/css/style.css">
+	<link rel="stylesheet" href="../../assets/css/bootstrap.min.css">
+	<link rel="stylesheet" href="../../assets/css/owl.carousel.min.css">
+	<link rel="stylesheet" href="../../assets/css/slicknav.css">
+	<link rel="stylesheet" href="../../assets/css/animate.min.css">
+	<link rel="stylesheet" href="../../assets/css/magnific-popup.css">
+	<link rel="stylesheet" href="../../assets/css/fontawesome-all.min.css">
+	<link rel="stylesheet" href="../../assets/css/themify-icons.css">
+	<link rel="stylesheet" href="../../assets/css/slick.css">
+	<link rel="stylesheet" href="../../assets/css/nice-select.css">
+	<link rel="stylesheet" href="../../assets/css/style.css">
 	<!-- special file -->
-	<link rel="stylesheet" href="../assets/css/login-form.css">
-	<link rel="stylesheet" href="./request-style.css">
+	<link rel="stylesheet" href="../../assets/css/login-form.css">
+	<link rel="stylesheet" href="../../assets/css/request-style.css">
 </head>
 
 <body>
@@ -58,7 +58,8 @@
 							</div>
 							<!-- add database query in record-editor.js -->
 							<!-- this is dummy form there is no 'submit' button -->
-							<form>
+							<form action="/edit/received" method="POST">
+								<input type="hidden" style="width:500px;" name="REID" value="<%=REID%>">
 								<table class="table table-striped record">
 									<tr>
 										<td>BloodbagID</td>
@@ -67,20 +68,25 @@
 										<td>Blood Group</td>
 										<td class="icon-delete">Delete</td>
 									</tr>
+									<%for(var i=0;i<record.length;i++){%>
+										
+									
 									<!-- print all the received records -->
+									
 									<tr>
-										<td><input type="text" size="10" placeholder="BloodbagID" value="1248" required disabled class="editable"></td>
-										<td><input type="date" size="10" placeholder="Received Date" value="2020-01-31" required disabled class="editable"></td>
+										<td><input type="text" size="10" placeholder="BloodbagID" value="<%=record[i].BBID%>" required disabled class="editable"></td>
+										<td><input type="date" size="10" placeholder="Received Date" value="<%=record[i].received_date%>" required disabled class="editable"></td>
 										<td><input type="text" size="10" placeholder="Amount Received" value="500" required disabled class="editable"></td>
-										<td><input type="text" size="3" placeholder="Blood Group" value="A+" required disabled class="editable"></td>
+										<td><input type="text" size="3" placeholder="Blood Group" value="<%=record[i].blood_group%>%>" required disabled class="editable"></td>
 										<td class="icon-delete"><button type="button" onclick="delete_bloodbag()">&#10060;</button></td>
 									</tr>
+									<%}%>
 									<!-- end printing records -->
 									<tr id="new_bloodbag">
-										<td><input type="text" size="10" placeholder="BloodbagID" value="" required disabled class="editable"></td>
-										<td><input type="date" size="10" placeholder="Received Date" value="" required disabled class="editable"></td>
-										<td><input type="text" size="10" placeholder="Amount Received" value="" required disabled class="editable"></td>
-										<td><input type="text" size="3" placeholder="Blood Group" value="" required disabled class="editable"></td>
+										<td><input type="text" size="10" placeholder="BloodbagID" name="BBID" value="" required disabled class="editable"></td>
+										<td><input type="date" size="10" placeholder="Received Date" name="received_date" value="" required disabled class="editable"></td>
+										<td><input type="text" size="10" placeholder="Amount Received" name="amount" value="" required disabled class="editable"></td>
+										<td><input type="text" size="3" placeholder="Blood Group" name="blood_group" value="" required disabled class="editable"></td>
 									</tr>
 								</table>
 								<div class="container">
@@ -90,7 +96,7 @@
 										<button type="button" onclick="update_btn();toggle_class('icon-delete','none');" class="genric-btn info" id="btn-update">Update</button>
 										<button type="button" onclick="delete_btn();toggle_class('icon-delete','none');" class="genric-btn danger" id="btn-delete">Delete</button>
 										<button type="button" onclick="cancel_btn();toggle_class('icon-delete','none');" class="genric-btn info" id="btn-cancel">Cancel</button>
-										<button type="button" onclick="add_newbloodbag()" class="genric-btn info" id="bloodbag-btn-add">Add</button>
+										<button type="submit" onclick="return confirm('Are you sure to assign blood bag?');" class="genric-btn info" id="bloodbag-btn-add">Add</button>
 										<button type="button" onclick="cancel_newbloodbag()" class="genric-btn danger" id="bloodbag-btn-cancel">Cancel</button>
 									</div>
 								</div>
@@ -106,42 +112,42 @@
 
 	<!-- JS here -->
 	<!-- header and footer include -->
-	<script src="/assets/js/plain-header-admin.txt" language="javascript" type="text/javascript"></script>
-	<script src="/assets/js/footer-admin.txt" language="javascript" type="text/javascript"></script>
+	<script src="../../assets/js/plain-header-admin.txt" language="javascript" type="text/javascript"></script>
+	<script src="../../assets/js/footer-admin.txt" language="javascript" type="text/javascript"></script>
 	<!-- custom script databse changes in this .js files -->
-	<script src="js/record-editor.js"></script>
-	<script src="js/received-record-editor.js"></script>
+	<script src="../../assets/js/record-editor.js"></script>
+	<script src="../../assets/js/received-record-editor.js"></script>
 	<!-- All JS Custom Plugins Link Here here -->
-	<script src="../assets/js/vendor/modernizr-3.5.0.min.js"></script>
+	<script src="../../assets/js/vendor/modernizr-3.5.0.min.js"></script>
 	<!-- Jquery, Popper, Bootstrap -->
-	<script src="../assets/js/vendor/jquery-1.12.4.min.js"></script>
-	<script src="../assets/js/popper.min.js"></script>
-	<script src="../assets/js/bootstrap.min.js"></script>
+	<script src="../../assets/js/vendor/jquery-1.12.4.min.js"></script>
+	<script src="../../assets/js/popper.min.js"></script>
+	<script src="../../assets/js/bootstrap.min.js"></script>
 	<!-- Jquery Mobile Menu -->
-	<script src="../assets/js/jquery.slicknav.min.js"></script>
+	<script src="../../assets/js/jquery.slicknav.min.js"></script>
 
 	<!-- Jquery Slick , Owl-Carousel Plugins -->
-	<script src="../assets/js/owl.carousel.min.js"></script>
-	<script src="../assets/js/slick.min.js"></script>
+	<script src="../../assets/js/owl.carousel.min.js"></script>
+	<script src="../../assets/js/slick.min.js"></script>
 	<!-- One Page, Animated-HeadLin -->
-	<script src="../assets/js/wow.min.js"></script>
-	<script src="../assets/js/animated.headline.js"></script>
-	<script src="../assets/js/jquery.magnific-popup.js"></script>
+	<script src="../../assets/js/wow.min.js"></script>
+	<script src="../../assets/js/animated.headline.js"></script>
+	<script src="../../assets/js/jquery.magnific-popup.js"></script>
 
 	<!-- Nice-select, sticky -->
-	<script src="../assets/js/jquery.nice-select.min.js"></script>
-	<script src="../assets/js/jquery.sticky.js"></script>
+	<script src="../../assets/js/jquery.nice-select.min.js"></script>
+	<script src="../../assets/js/jquery.sticky.js"></script>
 
 	<!-- contact js -->
-	<script src="../assets/js/contact.js"></script>
-	<script src="../assets/js/jquery.form.js"></script>
-	<script src="../assets/js/jquery.validate.min.js"></script>
-	<script src="../assets/js/mail-script.js"></script>
-	<script src="../assets/js/jquery.ajaxchimp.min.js"></script>
+	<script src="../../assets/js/contact.js"></script>
+	<script src="../../assets/js/jquery.form.js"></script>
+	<script src="../../assets/js/jquery.validate.min.js"></script>
+	<script src="../../assets/js/mail-script.js"></script>
+	<script src="../../assets/js/jquery.ajaxchimp.min.js"></script>
 
 	<!-- Jquery Plugins, main Jquery -->
-	<script src="../assets/js/plugins.js"></script>
-	<script src="../assets/js/main.js"></script>
+	<script src="../../assets/js/plugins.js"></script>
+	<script src="../../assets/js/main.js"></script>
 
 </body>
 </html>
