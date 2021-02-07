@@ -98,8 +98,9 @@ router.post("/edit-camp", async (req, res) => {
 
   if(req.body.submit=='update'){
       await db.query(
-          "UPDATE blood_donation_camp SET camp_start=?,camp_end=?,location=?,comments=? WHERE BDCID=? ;",
+          "UPDATE blood_donation_camp SET camp_name=?,camp_start=?,camp_end=?,location=?,comments=? WHERE BDCID=? ;",
           [
+            req.body.camp_name,
             req.body.camp_start,
             req.body.camp_end,
             req.body.location,
@@ -163,8 +164,14 @@ router.post("/edit-people", async (req, res) => {
               console.log("here at update in people ");
 
               console.log("Rows affected:", results.affectedRows);
+              if(typeof req.body.add_donor == "undefined" || req.body.add_donor == "1") {
+                  if(req.body.previous_sms_date == ""){
+                      req.body.previous_sms_date = null;
+                  }
                db.query(
-                "UPDATE donor SET height=?,weight=?,next_donation_date=?,previous_sms_date=? WHERE PID=? ;",
+                `INSERT INTO donor (height, weight, next_donation_date, previous_sms_date, PID)
+                VALUES (?, ?, ?, ?, ?) ON DUPLICATE KEY
+                UPDATE height=VALUES(height),weight=VALUES(weight),next_donation_date=VALUES(next_donation_date),previous_sms_date=VALUES(previous_sms_date);`,
                 [
                   req.body.height,
                   req.body.weight,
@@ -177,13 +184,13 @@ router.post("/edit-people", async (req, res) => {
                     console.log(error);
                     res.send("error");
                   } else {
-                    console.log("here at update in people ");
+                    console.log("here at update/insert in donor ");
                     console.log("Rows affected:", results.affectedRows);
-                    res.redirect("/admin/admin-people.html");
                   }
                 }
               );
-
+             }
+             res.redirect("/admin/admin-people.html");
             }
           }
         );

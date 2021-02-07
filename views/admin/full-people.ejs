@@ -132,28 +132,58 @@
 								  <%}%>
                                 </td>
                               </tr>
-							  <%if(peoples[0].isdonor) {%>
-                              <tr>
-                                <td>Height</td>
-                                <td><input type="text" name="height" size="15" placeholder="Height (in cms)" value="<%peoples[0].height%>" required disabled class="editable"></td>
-							  </tr>
-                              <tr>
-								<td>Weight</td>
-								<td><input type="text" name="weight" size="15" placeholder="Weight (in kgs)" value="<%=peoples[0].weight%>" required disabled class="editable"></td>
-							  </tr>
-                              <tr>
-                                <td>Next Safe Donation</td>
-                                <td><input type="date" size="10" value="<%=peoples[0].next_donation_date.getFullYear()%>-<%=('0'+(peoples[0].next_donation_date.getMonth()+1)).slice(-2)%>-<%=('0'+(peoples[0].next_donation_date.getDate())).slice(-2)%>" required disabled class="editable"></td>
-							  </tr>
-                              <tr>
-                                <td>Previous Notified</td>
-                                <td><input type="date" size="10" value="<%=peoples[0].previous_sms_date.getFullYear()%>-<%=('0'+(peoples[0].previous_sms_date.getMonth()+1)).slice(-2)%>-<%=('0'+(peoples[0].previous_sms_date.getDate())).slice(-2)%>" required disabled class="editable"></td>
-							  </tr>
-							  <%} else {%>
-							  <tr>
-								<td colspan="2">User never Donated Blood, Height,Weight is not Available</td>
-							  </tr>
+							  <%if(!peoples[0].isdonor) {%>
+								  <tr>
+									<td rowspan="3">Donor</td>
+									<td>Donor Details Not Available</td>
+								  </tr>
+								  <tr>
+									<td>Do you want to add Donor Details?</td>
+								  </tr>
+								  <tr>
+									<td>
+										<input id="add-donor-yes" type="radio" name="add_donor" onclick="toggle_class('show-on-add-donor-yes','table-row');toggle_required('set-require',true)" value="1" disabled class="editable" />
+	                                    <label for="add-donor-yes" class="mr-50">Yes</label>
+	                                    <input id="add-donor-no" type="radio" name="add_donor" onclick="toggle_class('show-on-add-donor-yes','none');toggle_required('set-require',false)" value="0" checked disabled class="editable" />
+	                                    <label for="add-donor-no">No</label>
+									</td>
+								  </tr>
+								  <!-- Hide donor details if donor record not available and radio is no -->
+								  <style>.show-on-add-donor-yes{ display: none; }</style>
 							  <%}%>
+
+                              <tr class="show-on-add-donor-yes">
+                                <td>Height</td>
+								<%if(peoples[0].isdonor) {%>
+                                	<td><input type="text" name="height" size="15" placeholder="Height (in cms)" value="<%=peoples[0].height%>" required disabled class="editable"></td>
+								<%} else {%>
+									<td><input type="text" name="height" size="15" placeholder="Height (in cms)" value="" disabled class="editable set-require"></td>
+								<%}%>
+							  </tr>
+                              <tr class="show-on-add-donor-yes">
+								<td>Weight</td>
+								<%if(peoples[0].isdonor) {%>
+									<td><input type="text" name="weight" size="15" placeholder="Weight (in kgs)" value="<%=peoples[0].weight%>" required disabled class="editable"></td>
+								<%} else {%>
+									<td><input type="text" name="weight" size="15" placeholder="Weight (in kgs)" value="" disabled class="editable set-require"></td>
+								<%}%>
+							  </tr>
+                              <tr class="show-on-add-donor-yes">
+                                <td>Next Safe Donation</td>
+								<%if(peoples[0].isdonor) {%>
+                                	<td><input type="date" name="next_donation_date" size="10" value="<%=peoples[0].next_donation_date.getFullYear()%>-<%=('0'+(peoples[0].next_donation_date.getMonth()+1)).slice(-2)%>-<%=('0'+(peoples[0].next_donation_date.getDate())).slice(-2)%>" required disabled class="editable"></td>
+								<%} else {%>
+									<td><input type="date" name="next_donation_date" size="10" value="" disabled class="editable set-require"></td>
+								<%}%>
+							  </tr>
+                              <tr class="show-on-add-donor-yes">
+                                <td>Previous Notified</td>
+								<%if(peoples[0].isdonor && peoples[0].previous_sms_date != null) {%>
+                                	<td><input type="date" name="previous_sms_date" size="10" value="<%=peoples[0].previous_sms_date.getFullYear()%>-<%=('0'+(peoples[0].previous_sms_date.getMonth()+1)).slice(-2)%>-<%=('0'+(peoples[0].previous_sms_date.getDate())).slice(-2)%>" required disabled class="editable"></td>
+								<%} else {%>
+									<td><input type="date" name="previous_sms_date" size="10" value="" disabled class="editable"></td>
+								<%}%>
+							  </tr>
                               <tr>
                                 <td>Previous Donations</td>
 								<%if(peoples[0].isdonor) {%>

@@ -65,6 +65,11 @@
                                         <td><%= request[0].BDCID %></td>
                                     </tr>
                                     <tr>
+                                        <td>Camp Name</td>
+                                        <td><input name="camp_name" type="text" size="60" value="<%=request[0].camp_name%>" required
+                                                disabled class="editable"></td>
+                                    </tr>
+                                    <tr>
                                         <td>Start Date</td>
                                         <td><input name="camp_start" type="date" value="<%=request[0].camp_start.getFullYear()%>-<%=('0'+(request[0].camp_start.getMonth()+1)).slice(-2)%>-<%=('0'+(request[0].camp_start.getDate())).slice(-2)%>"  required
                                                 disabled class="editable"></td>

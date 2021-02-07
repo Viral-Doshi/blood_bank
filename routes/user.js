@@ -122,19 +122,34 @@ router.get("/login-redirect", async (req, res) => {
         console.log(error);
         res.send("error");
       } else {
-        res.render("forms/login-redirect", {
-          wrong: wrong,
-          user_type: req.session.user_type,
-          camps: result,
-        });
+        var camps = result;
+        db.query(
+            "SELECT BLID,branch_name,branch_location FROM blood_bank",
+            function (error, result, fields) {
+              if (error) {
+                console.log(error);
+                res.send("error");
+              } else {
+                    res.render("forms/login-redirect", {
+                      wrong: wrong,
+                      user_type: req.session.user_type,
+                      camps: camps,
+                      banks: result,
+                    });
+                }
+            }
+        );
       }
     }
   );
 });
 
 router.post("/login-redirect", async (req, res) => {
-  var bdcid = req.body.user_location;
-  req.session.bdcid = bdcid;
+    // campId, BankId
+  var cid_bid = (req.body.user_location).split(',');
+  console.log(cid_bid);
+  req.session.bdcid = (cid_bid[0]=="-1")? null : cid_bid[0];
+  req.session.blid = (cid_bid[1]=="-1")? null : cid_bid[1];
   res.redirect("/data-entry");
 });
 
@@ -164,6 +179,9 @@ router.post("/login", async (req, res) => {
         req.session.blood = result[0].blood_group;
         req.session.phone = result[0].phone_number;
         wrong = false;
+        if(req.session.user_type == "normal"){
+            res.redirect("/index.html");
+        }
         res.redirect("/user/login-redirect");
       } else {
         wrong = true;

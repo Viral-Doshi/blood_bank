@@ -86,8 +86,8 @@ router.post("/registeration-step1", getPid, (req, res) => {
   };
 
   db.query(
-    "INSERT INTO donor SET ?",
-    donor_user,
+    "INSERT INTO donor SET ? ON DUPLICATE KEY UPDATE weight=?,height=?,next_donation_date=?,previous_sms_date=?",
+    [donor_user, donor_user.weight, donor_user.height, donor_user.next_donation_date, donor_user.previous_sms_date],
     function (error, results, fields) {
       if (error) {
         console.log(error);
@@ -104,6 +104,7 @@ router.post("/registeration-step1", getPid, (req, res) => {
     donation_date: today,
     donation_step: 1,
     BDCID: req.session.bdcid,
+    BLID: req.session.blid,
   };
 
   db.query(
@@ -125,21 +126,26 @@ router.post("/registeration-step1", getPid, (req, res) => {
 
 router.post("/pretest-step2", async (req, res) => {
   p = req.session.pid;
+  console.log(req.body.blood_type);
   var users = {
     PID: p,
     blood_test1: req.body.hg_level,
     blood_test2: req.body.bp_level,
     blood_test3: req.body.temp_level,
+    blood_test4: req.body.pulse,
+    blood_type: req.body.blood_type,
     donation_step: 2,
   };
 
   await db.query(
-    "UPDATE donation_record SET blood_test1=?,blood_test2=?,blood_test3=?,donation_step=? WHERE PID=? ;",
+    "UPDATE donation_record SET blood_test1=?,blood_test2=?,blood_test3=?,blood_test4=?,donation_step=?,blood_type=? WHERE PID=? ;",
     [
       users.blood_test1,
       users.blood_test2,
       users.blood_test3,
+      users.blood_test4,
       users.donation_step,
+      users.blood_type,
       users.PID,
     ],
     function (error, results, fields) {

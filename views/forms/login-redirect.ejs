@@ -157,10 +157,13 @@ const db = require("../../config/db.js");
                     </div>
                     <div class="col-xs-6 align-content-center">
                       <select name="user_location" required>
-                        <option value="-1" disabled selected hidden>Please select your current Camp/Blood-Bank Location</option>
-                        <% for(var i=0; i <camps.length;i++){ %>
-                        
-                        <option value="<%=camps[i].BDCID%>"><%=camps[i].location%></option>
+                        <option value="-1,-1" disabled selected hidden>Please select your current Camp/Blood-Bank Location</option>
+                        <!-- value = "Camp Id,Bank Id" == "BDCID,BLID" -->
+                        <%for(var i=0;i<camps.length;i++) { %>
+                            <option value="<%=camps[i].BDCID%>,-1"><%=camps[i].camp_name%>-<%=camps[i].location%></option>
+                        <%}%>
+                        <%for(var i=0;i<banks.length;i++) { %>
+                            <option value="-1,<%=banks[i].BLID%>"><%=banks[i].branch_name%>-<%=banks[i].branch_location%></option>
                         <%}%>
                       </select>
 
