@@ -129,8 +129,9 @@ router.post("/registeration-step1", getPid, (req, res) => {
 router.post("/pretest-step2", async (req, res) => {
   p = req.session.pid;
   var d_step=2;
-  if(req.body.hg_level == 0 ||req.body.bp_level ==0 || req.body.temp_level==0  )
-  d_step=-1;
+  if(req.body.hg_level == 0 ||req.body.bp_level ==0 || req.body.temp_level==0 || req.body.pulse==0  ){
+      d_step=-1;
+  }
   var users = {
     PID: p,
     blood_test1: req.body.hg_level,

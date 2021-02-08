@@ -462,7 +462,7 @@ app.get(
   async (req, res) => {
     {
       await db.query(
-        "SELECT  * FROM donation_record, people WHERE donation_record.DID = ? AND donation_record.PID = people.PID",
+        "SELECT * FROM donation_record, people WHERE donation_record.DID = ? AND donation_record.PID = people.PID",
         req.params["id"],
         function (error, result, fields) {
           if (error) {

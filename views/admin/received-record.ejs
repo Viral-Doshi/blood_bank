@@ -4,7 +4,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="x-ua-compatible" content="ie=edge">
-	<title>Admin Home </title>
+	<title>Received Bloodbag</title>
 	<meta name="description" content="">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -31,7 +31,7 @@
 			<div class="preloader-inner position-relative">
 				<div class="preloader-circle"></div>
 				<div class="preloader-img pere-text">
-					<img src="../assets/img/logo/loder.jpg" alt="">
+					<img src="/assets/img/logo/loder.jpg" alt="">
 				</div>
 			</div>
 		</div>
@@ -69,15 +69,15 @@
 										<td class="icon-delete">Delete</td>
 									</tr>
 									<%for(var i=0;i<record.length;i++){%>
-										
-									
+
+
 									<!-- print all the received records -->
-									
+
 									<tr>
 										<td><input type="text" size="10" placeholder="BloodbagID" value="<%=record[i].BBID%>" required disabled class="editable"></td>
-										<td><input type="date" size="10" placeholder="Received Date" value="<%=record[i].received_date%>" required disabled class="editable"></td>
-										<td><input type="text" size="10" placeholder="Amount Received" value="500" required disabled class="editable"></td>
-										<td><input type="text" size="3" placeholder="Blood Group" value="<%=record[i].blood_group%>%>" required disabled class="editable"></td>
+										<td><input type="date" size="10" value="<%=record[i].received_date.getFullYear()%>-<%=('0'+(record[i].received_date.getMonth()+1)).slice(-2)%>-<%=('0'+(record[i].received_date.getDate())).slice(-2)%>" required disabled class="editable"></td>
+										<td><input type="text" size="10" placeholder="Amount" value="<%=record[i].amount%>" required disabled class="editable"></td>
+										<td><input type="text" size="3" placeholder="Blood Group" value="<%=record[i].blood_group%>" required disabled class="editable"></td>
 										<td class="icon-delete"><button type="button" onclick="delete_bloodbag()">&#10060;</button></td>
 									</tr>
 									<%}%>
@@ -85,7 +85,7 @@
 									<tr id="new_bloodbag">
 										<td><input type="text" size="10" placeholder="BloodbagID" name="BBID" value="" required disabled class="editable"></td>
 										<td><input type="date" size="10" placeholder="Received Date" name="received_date" value="" required disabled class="editable"></td>
-										<td><input type="text" size="10" placeholder="Amount Received" name="amount" value="" required disabled class="editable"></td>
+										<td><input type="text" size="10" placeholder="Amount" name="amount" value="" required disabled class="editable"></td>
 										<td><input type="text" size="3" placeholder="Blood Group" name="blood_group" value="" required disabled class="editable"></td>
 									</tr>
 								</table>
