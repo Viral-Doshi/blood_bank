@@ -434,6 +434,29 @@ app.get("/showrequest/:id", [checkIfLogged, checkIfAdmin], async (req, res) => {
 });
 
 app.get(
+  "/admin/received-record.html/:id",
+  [checkIfLogged, checkIfAdmin],
+  async (req, res) => {
+    await db.query(
+      "SELECT * FROM received_record WHERE REID=?",
+      req.params["id"],
+      async (error, result, fields) => {
+        if (error) {
+          console.log(error);
+          res.redirect("/admin/index_admin.html");
+        } else {
+          res.render("admin/received-record", {
+            logged: req.session.admin,
+            record: result,
+            REID:req.params["id"],
+          });
+        }
+      }
+    );
+  }
+);
+
+app.get(
   "/showdonation/:id",
   [checkIfLogged, checkIfAdmin],
   async (req, res) => {
@@ -540,10 +563,47 @@ app.get(
 );
 
 app.get(
-  "/admin/full-bloodbag.html",
+  "/admin/full-bloodbag.html/:id",
   [checkIfLogged, checkIfAdmin],
   async (req, res) => {
-    res.render("admin/full-bloodbag", { logged: req.session.admin });
+    await db.query(
+      "SELECT * FROM blood_bag,donation_record,people WHERE  blood_bag.BBID=? AND blood_bag.BBID=donation_record.BBID AND people.PID=donation_record.PID",
+      req.params["id"],
+      async (error, result, fields) => {
+        if (error) {
+          console.log(error);
+          res.redirect("/");
+        } else {
+          console.log(result);
+          res.render("admin/full-bloodbag", {
+            logged: req.session.admin,
+            blood_bag: result,
+          });
+        }
+      }
+    );
+  }
+);
+
+app.get(
+  "/admin/admin-bloodbag.html/:id",
+  [checkIfLogged, checkIfAdmin],
+  async (req, res) => {
+    await db.query(
+      "SELECT * FROM blood_bag,donation_record WHERE  blood_bag.BLID=? AND blood_bag.BBID=donation_record.BBID",
+      req.params["id"],
+      async (error, result, fields) => {
+        if (error) {
+          console.log(error);
+          res.redirect("/");
+        } else {
+          res.render("admin/admin-bloodbag", {
+            logged: req.session.admin,
+            blood_bag: result,
+          });
+        }
+      }
+    );
   }
 );
 
