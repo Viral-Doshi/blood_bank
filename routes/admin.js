@@ -183,7 +183,7 @@ router.post("/full-camps/filter", async (req, res) => {
     query = "SELECT * FROM blood_donation_camp WHERE camp_start > ?";
   } else if (req.body.filter == "ongoing") {
     query =
-      "SELECT * FROM blood_donation_camp WHERE camp_start > ? AND camp_end < ?";
+      "SELECT * FROM blood_donation_camp WHERE camp_start < ? AND camp_end > ?";
   } else {
     query = "SELECT * FROM blood_donation_camp WHERE camp_end < ?";
   }
