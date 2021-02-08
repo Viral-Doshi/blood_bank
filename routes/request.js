@@ -79,7 +79,8 @@ router.get("/sendmails", checkIfLogged, async (req, res) => {
         res.redirect("/");
       } else {
         console.log(result);
-        for (var i = 0; i < 5; i++) {
+        //for (var i = 0; i < 5; i++) {
+        for (var i = 0; false; i++) {
           var mailOptions = {
             from: "2019284@iiitdmj.ac.in",
             to: result[i].email,
