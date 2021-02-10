@@ -3,12 +3,56 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>OTP Verification</title>
+    <link rel="stylesheet" href="/assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/assets/css/login-form.css">
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <style>
+    input{
+        letter-spacing:1rem;
+        text-align:center;
+        color: black;
+        font-weight: 7000;
+    }
+    input::-webkit-outer-spin-button,
+    input::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+    }
+    /* Firefox */
+    input[type=number] {
+        -moz-appearance: textfield;
+    }
+    </style>
 </head>
 <body>
-    <form action="/user/otp" method="POST">
-        <input type="number" name="otp"/>
-        <button type="submit">Confirm</button>
-    </form>
+<main>
+    <section class="login-form-area section-bg  pt-115 pb-120 fix">
+        <div class="container">
+            <div class="row justify-content-center">
+                <!-- login wrapper -->
+                <div class="col-xl-8 col-lg-9">
+                    <div class="login-form-wrapper">
+                        <!-- From title -->
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <!-- Section Tittle -->
+                                <div class="section-tittle mb-50">
+                                    <h2>OTP</h2>
+                                    <p>Enter the OTP received on your device.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <form autocomplete="off" action="/user/otp" method="POST" class="login-form">
+                            <input type="number" name="otp" maxlength="6" pattern="[0-9]{6}" title="Enter 6 digit OTP" autocomplete="off" required
+                            oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" />
+                            <button type="submit" class="btn">Confirm</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
 </body>
 </html>

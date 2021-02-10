@@ -160,3 +160,12 @@ table.table.blood-bank-table td {
   background-color: rgba(224, 224, 224, .75);
   backdrop-filter: blur(1px);
 }
+
+select.dis-select:disabled {
+    -moz-appearance: none;
+    -webkit-appearance: none;
+    background-color: transparent;
+    border: 0px;
+    opacity:1.0;
+    color:black;
+}

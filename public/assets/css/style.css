@@ -6846,11 +6846,27 @@ b, sup, sub, u, del {
     font-family: monospace;
     color: black;
 }
+.card-wrapper img.qr-code{
+    position:absolute;
+    max-width:70px;
+    max-height:70px;
+}
 
 @media (max-width: 400px){
   .card-wrapper h4{
       font-size: 14px;
   }
+  .card-wrapper img.qr-code{
+      max-width: 60px;
+      max-height: 60px;
+  }
+}
+
+@media (max-width: 330px){
+    .card-wrapper img.qr-code{
+        max-width: 50px;
+        max-height: 50px;
+    }
 }
 
 

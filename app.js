@@ -164,7 +164,7 @@ app.get("/blog_details.html", async (req, res) => {
 app.get("/donate_now.html", checkIfLogged, async (req, res) => {
   res.render("donate_now", {
       logged: req.session.admin,
-      info: req.session, 
+      info: req.session,
   });
 });
 
@@ -227,7 +227,7 @@ app.get(
                                   console.log(error);
                                 } else {
                                   req.session.ongoing = results;
-
+                                  console.log(req.session.peoplecount);
                                   res.render("admin/index_admin", {
                                     logged: req.session.admin,
                                     reqcount: req.session.reqcount,
@@ -493,12 +493,12 @@ app.get(
   [checkIfLogged, checkIfAdmin],
   async (req, res) => {
     await db.query(
-      `SELECT DID, don_rec.PID, full_name, don_rec.BDCID, don_rec.BLID, donation_date, blood_type,
+      `SELECT DID, don_rec.PID, full_name, don_rec.BDCID, don_rec.BLID, donation_date, blood_group,
       CASE
         WHEN don_rec.BDCID IS NULL THEN branch_name
         ELSE camp_name
       END AS branch_camp_name
-      FROM (SELECT DID, PID, BDCID, BLID, donation_date, blood_type FROM donation_record LIMIT ?, 50) AS don_rec
+      FROM (SELECT DID, PID, BDCID, BLID, donation_date FROM donation_record LIMIT ?, 50) AS don_rec
       INNER JOIN people ON don_rec.PID=people.PID
       LEFT JOIN blood_donation_camp ON don_rec.BDCID=blood_donation_camp.BDCID
       LEFT JOIN blood_bank ON don_rec.BLID=blood_bank.BLID`,

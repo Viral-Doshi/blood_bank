@@ -34,7 +34,7 @@ const { fields } = require("./middleware/multerMiddleware.js");
 router.post("/add-people", checkIfPersonExists, async (req, res) => {
   var users = {
     full_name: req.body.name,
-    blood_group: req.body.blood_type,
+    blood_group: req.body.blood_group,
     DOB: req.body.dob,
     phone_number: req.body.phone,
     email: req.body.email,
@@ -43,6 +43,7 @@ router.post("/add-people", checkIfPersonExists, async (req, res) => {
     gender: req.body.gender,
     user_type: req.body.user_type,
   };
+
   console.log(users);
 
   const salt = await bcrypt.genSalt(10);
@@ -53,12 +54,38 @@ router.post("/add-people", checkIfPersonExists, async (req, res) => {
     await db.query(
       "INSERT INTO people SET ?",
       users,
-      function (error, results, fields) {
+      async function (error, results, fields) {
         if (error) {
           console.log(error);
           res.redirect("/admin/index_admin");
         } else {
-          res.redirect("/admin/admin-people");
+          console.log("new people created : PID = "+results.insertId);
+          // add donor account only if admin entered details
+          if(req.body.add_donor=="1"){
+              var donor = {
+                  PID: results.insertId,
+                  height: req.body.height,
+                  weight: req.body.weight,
+                  next_donation_date: req.body.next_donation_date,
+                  previous_sms_date: (req.body.previous_sms_date=="")?null:req.body.previous_sms_date=="",
+              };
+              await db.query(
+                "INSERT INTO donor SET ?",
+                donor,
+                function(error,results, fields){
+                    if (error) {
+                      console.log(error);
+                      res.redirect("/admin/index_admin");
+                    } else {
+                      console.log("donor inserted");
+                      res.redirect("/admin/admin-people");
+                    }
+                }
+              );
+          }
+          else{
+              res.redirect("/admin/admin-people");
+          }
         }
       }
     );

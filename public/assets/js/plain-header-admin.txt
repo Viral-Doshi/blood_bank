@@ -8,7 +8,7 @@ document.getElementsByTagName("header")[0].innerHTML = (`
                         <!-- Logo -->
                         <div class="col-xl-2 col-lg-2 mt-20 mb-20">
                             <div class="logo">
-                                <img src="../assets/img/logo/logo.png" alt="">
+                                <img src="/assets/img/logo/logo.png" alt="">
                             </div>
                         </div>
                     </div>

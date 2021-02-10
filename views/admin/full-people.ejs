@@ -19,24 +19,24 @@
 		<link rel="stylesheet" href="/assets/css/slick.css">
 		<link rel="stylesheet" href="/assets/css/nice-select.css">
 		<link rel="stylesheet" href="/assets/css/style.css">
-    <!-- special file -->
-    <link rel="stylesheet" href="/assets/css/login-form.css">
-    <link rel="stylesheet" href="/assets/css/request-style.css">
+	    <!-- special file -->
+	    <link rel="stylesheet" href="/assets/css/login-form.css">
+	    <link rel="stylesheet" href="/assets/css/request-style.css">
 </head>
 
 <body>
-    <!-- Preloader Start -->
-    <div id="preloader-active">
-        <div class="preloader d-flex align-items-center justify-content-center">
-            <div class="preloader-inner position-relative">
-                <div class="preloader-circle"></div>
-                <div class="preloader-img pere-text">
-                    <img src="/assets/img/logo/loder.jpg" alt="">
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- Preloader Start -->
+
+	<div id="preloader-active">
+		<div class="preloader d-flex align-items-center justify-content-center">
+			<div class="preloader-inner position-relative">
+				<div class="preloader-circle"></div>
+				<div class="preloader-img pere-text">
+					<img src="/assets/img/logo/loder.jpg" alt="">
+				</div>
+			</div>
+		</div>
+	</div>
+
     <header>
   </header>
 	<main>
@@ -75,7 +75,17 @@
                               <tr>
                                 <td>Blood Group</td>
                                 <td>
-									<input type="text" size="10" name="blood_group" placeholder="Blood Group" value="<%=peoples[0].blood_group%>" pattern="(A|B|AB|O)[+-]" title="Select a valid Blood Group" required disabled class="editable">
+									<select id="blood_group_select" name="blood_group" required disabled class="editable dis-select">
+										<option value="A+">A+</option>
+										<option value="AB+">AB+</option>
+										<option value="B+">B+</option>
+										<option value="O+">O+</option>
+										<option value="A-">A-</option>
+										<option value="AB-">AB-</option>
+										<option value="B-">B-</option>
+										<option value="O-">O-</option>
+									</select>
+									<script>document.getElementById("blood_group_select").value="<%=peoples[0].blood_group%>";</script>
 								</td>
                               </tr>
                               <tr>
@@ -187,7 +197,7 @@
                               <tr>
                                 <td>Previous Donations</td>
 								<%if(peoples[0].isdonor) {%>
-                                	<td><a href = "#">link to donations</a></td>
+                                	<td><a href = "">link to donations</a></td>
 								<%} else {%>
                                 	<td>Never Donated</td>
 								<%}%>
@@ -219,43 +229,47 @@
 	<footer>
 	</footer>
 
-<!-- JS here -->
-  <!--<script src="/assets/js/header-admin.txt" language="javascript" type="text/javascript"></script>-->
-  <script src="/assets/js/footer-admin.txt" language="javascript" type="text/javascript"></script>
-		<!-- custom script databse changes in this .js files -->
-		<script src="/assets/js/record-editor.js"></script>
-		<script src="/assets/js/full-request-editor.js"></script>
-		<!-- All JS Custom Plugins Link Here here -->
-        <script src="/assets/js/vendor/modernizr-3.5.0.min.js"></script>
-		<!-- Jquery, Popper, Bootstrap -->
-		<script src="/assets/js/vendor/jquery-1.12.4.min.js"></script>
-        <script src="/assets/js/popper.min.js"></script>
-        <script src="/assets/js/bootstrap.min.js"></script>
-	    <!-- Jquery Mobile Menu -->
-        <script src="/assets/js/jquery.slicknav.min.js"></script>
+	<!-- JS here -->
+	<!-- header and footer include -->
+	<script src="/assets/js/plain-header-admin.txt" language="javascript" type="text/javascript"></script>
+	<script src="/assets/js/footer-admin.txt" language="javascript" type="text/javascript"></script>
 
-		<!-- Jquery Slick , Owl-Carousel Plugins -->
-        <script src="/assets/js/owl.carousel.min.js"></script>
-        <script src="/assets/js/slick.min.js"></script>
-		<!-- One Page, Animated-HeadLin -->
-        <script src="/assets/js/wow.min.js"></script>
-		<script src="/assets/js/animated.headline.js"></script>
-		<script src="/assets/js/jquery.magnific-popup.js"></script>
+	<!-- custom script databse changes in this .js files -->
+	<script src="/assets/js/record-editor.js"></script>
+	<script src="/assets/js/full-request-editor.js"></script>
 
-		<!-- Nice-select, sticky -->
-        <script src="/assets/js/jquery.nice-select.min.js"></script>
-		<script src="/assets/js/jquery.sticky.js"></script>
+	<!-- All JS Custom Plugins Link Here here -->
+	<script src="/assets/js/vendor/modernizr-3.5.0.min.js"></script>
+	<!-- Jquery, Popper, Bootstrap -->
+	<script src="/assets/js/vendor/jquery-1.12.4.min.js"></script>
+	<script src="/assets/js/popper.min.js"></script>
+	<script src="/assets/js/bootstrap.min.js"></script>
+	<!-- Jquery Mobile Menu -->
+	<script src="/assets/js/jquery.slicknav.min.js"></script>
 
-        <!-- contact js -->
-        <script src="/assets/js/contact.js"></script>
-        <script src="/assets/js/jquery.form.js"></script>
-        <script src="/assets/js/jquery.validate.min.js"></script>
-        <script src="/assets/js/mail-script.js"></script>
-        <script src="/assets/js/jquery.ajaxchimp.min.js"></script>
+	<!-- Jquery Slick , Owl-Carousel Plugins -->
+	<script src="/assets/js/owl.carousel.min.js"></script>
+	<script src="/assets/js/slick.min.js"></script>
+	<!-- One Page, Animated-HeadLin -->
+	<script src="/assets/js/wow.min.js"></script>
+	<script src="/assets/js/animated.headline.js"></script>
+	<script src="/assets/js/jquery.magnific-popup.js"></script>
 
-		<!-- Jquery Plugins, main Jquery -->
-        <script src="/assets/js/plugins.js"></script>
-		<script src="/assets/js/main.js"></script>
+	<!-- Nice-select, sticky -->
+	<!-- <script src="/assets/js/jquery.nice-select.min.js"></script> -->
+	<!-- <script src="/assets/js/jquery.sticky.js"></script> -->
+
+	<!-- contact js -->
+	<script src="/assets/js/contact.js"></script>
+	<script src="/assets/js/jquery.form.js"></script>
+	<script src="/assets/js/jquery.validate.min.js"></script>
+	<script src="/assets/js/mail-script.js"></script>
+	<script src="/assets/js/jquery.ajaxchimp.min.js"></script>
+
+	<!-- Jquery Plugins, main Jquery -->
+	<script src="/assets/js/plugins.js"></script>
+	<script src="/assets/js/main.js"></script>
+
 
 </body>
 </html>

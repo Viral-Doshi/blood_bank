@@ -46,7 +46,7 @@ router.post("/signup", checkIfUserExists, async (req, res) => {
     password: req.body.password,
     verified: 0,
     gender: req.body.gender,
-    user_type: req.body.user_type,
+    user_type: 'normal',
   };
   console.log(users);
 
