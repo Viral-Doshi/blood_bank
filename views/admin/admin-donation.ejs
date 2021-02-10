@@ -99,7 +99,7 @@
 							<!-- pass the requestID to full-request.html which will than show every details of record -->
 							<td>DID</td>
 							<td>Full Name</td>
-							<td>Camp Name</td>
+							<td>Donated at</td>
 							<td>Blood Type</td>
 							<td class="bold">Date</td>
 						</tr>
@@ -111,7 +111,13 @@
 							<tr>
 								<td><a href="/showdonation/<%=donations[i].DID%>" target="_blank" class="r-status-rej"><%=donations[i].DID%></a></td>
 								<td><a href="/admin/full-people.html/<%=donations[i].PID%>" target="_blank"><%=donations[i].full_name%></a></td>
-								<td><a href="/admin/admin-bloodbank.html"><%=donations[i].camp_name%></a></td>
+								<td>
+									<%if(donations[i].BDCID != null) {%>
+										<a href="/admin/full-camps.html/<%=donations[i].BDCID%>" target="_blank"><%=donations[i].branch_camp_name%></a>
+									<%} else {%>
+										<a href="/admin/admin-bloodbank.html" target="_self"><%=donations[i].branch_camp_name%></a>
+									<%}%>
+								</td>
 								<td><%=donations[i].blood_type%></td>
 								<td class="bold"><%=('0'+(donations[i].donation_date.getDate())).slice(-2)%>-<%=('0'+(donations[i].donation_date.getMonth()+1)).slice(-2)%>-<%=donations[i].donation_date.getFullYear()%></td>
 							</tr>

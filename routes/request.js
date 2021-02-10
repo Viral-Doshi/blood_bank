@@ -41,6 +41,7 @@ router.post("/submit", upload.array("image"), async (req, res) => {
     PID: req.session.user,
     accepted: 0,
     uploaded_file: url,
+    purpose: req.body.message,
   };
 
   await db.query(

@@ -150,11 +150,21 @@
 						<!-- LOGGED OUT container End -->
 						<!-- LOGGED IN show this container if user id logged in -->
 						<div class="">
-							<div class="row d-flex justify-content-center mt-50">
+						  <div class="row d-flex justify-content-center mt-30">
+							<h3>Donor Card</h3>
+						  </div>
+						  <div class="row d-flex justify-content-center">
 								<!-- Display Donor Card -->
-								<h3>Donor Card</h3>
+							<div class="card-wrapper d-flex justify-content-center" style="position:relative;">
+								<img src="/assets/img/donor-id-card.png" style="height:auto;width:90%;max-width:500px;" />
+								<h4 style="top:47.0%;left:8.24%;"> <%=info.name%></h4>
+								<img src='https://api.qrserver.com/v1/create-qr-code/?data=<%=info.user%>' style="top:47.0%;left:70.24%;max-width:70px;max-height:70px;position:absolute;" />
+								<h4 style="top:67.78%;left:46.58%;"> <%=info.blood_group%> </h4>
+								<h4 style="top:67.78%;left:8.24%;"> <%=info.user%> </h4>
 							</div>
-                      </div>
+							<!-- Donor Card End-->
+						  </div>
+						</div>
 
 						<!-- LOGGED IN container End -->
 				</div>

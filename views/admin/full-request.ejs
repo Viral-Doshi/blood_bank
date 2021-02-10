@@ -60,9 +60,9 @@
 							<form  action="/edit/edit-request" method="post">
 								<table class="table table-striped record">
 
-									
+
 										<input type="hidden" style="width:500px;" name="REID" value="<%=request[0].REID%>"   >
-									
+
 
 
 									<tr>
@@ -87,19 +87,24 @@
 									</tr>
 									<tr>
 										<td>Account Requested</td>
-										<td><a href="/admin/full-people.html/20" target="_self">link to profile</a></td>
+										<td><a href="/admin/full-people.html/<%=request[0].PID%>" target="_self">link to profile</a></td>
 									</tr>
 									<tr>
 										<td>Purpose</td>
-										<td><textarea style="width:500px;" name="purpose" disabled class="editable">Purpose Entered in request by user</textarea></td>
+										<td><textarea style="width:500px;" name="purpose" disabled class="editable"><%=request[0].purpose%></textarea></td>
 									</tr>
 									<tr>
 										<td>Accept Request</td>
 										<td>
-											<input type="radio" name="status" id="accept" name="status" value="1" disabled required class="editable" checked >
+											<input type="radio" name="status" id="accept" name="status" value="1" disabled required class="editable">
 											<label for="accept"  class="mr-50">Accept</label>
 											<input type="radio" name="status" id="reject" name="status" disabled value="-1" required class="editable" >
 											<label for="reject">Reject</label>
+											<%if(request[0].accepted == "1"){%>
+		  									  	<script>document.getElementById("accept").checked = "true";</script>
+		  								  	<%}else if(request[0].accepted == "-1"){%>
+		  									  	<script>document.getElementById("reject").checked = "true";</script>
+		  								  	<%}%>
 										</td>
 									</tr>
 									<tr>
@@ -114,9 +119,9 @@
 								<div class="container">
 									<div class="row justify-content-between">
 										<button type="button" onclick="edit_btn()" class="genric-btn info circle" id="btn-edit">Edit</button>
+										<button type="button" onclick="cancel_btn()" class="genric-btn info" id="btn-cancel">Cancel</button>
 										<button type="submit" onclick="return confirm('Do you really want to update?');" name="submit" value="update"  class="genric-btn info" id="btn-update">Update</button>
 										<button type="submit" onclick="return confirm('Do you really want to delete?');" name="submit" value="delete"  class="genric-btn danger" id="btn-delete">Delete</button>
-										<button type="button" onclick="cancel_btn()" class="genric-btn info" id="btn-cancel">Cancel</button>
 									</div>
 								</div>
 							</form>

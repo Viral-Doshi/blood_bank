@@ -162,7 +162,10 @@ app.get("/blog_details.html", async (req, res) => {
 });
 
 app.get("/donate_now.html", checkIfLogged, async (req, res) => {
-  res.render("donate_now", { logged: req.session.admin });
+  res.render("donate_now", {
+      logged: req.session.admin,
+      info: req.session, 
+  });
 });
 
 app.get("/services.html", checkIfLogged, async (req, res) => {
@@ -426,6 +429,7 @@ app.get("/showrequest/:id", [checkIfLogged, checkIfAdmin], async (req, res) => {
         if (error) {
           console.log(error);
         } else {
+            console.log(result);
           res.render("admin/full-request", { request: result });
         }
       }
@@ -489,7 +493,16 @@ app.get(
   [checkIfLogged, checkIfAdmin],
   async (req, res) => {
     await db.query(
-      "SELECT * FROM donation_record,people,blood_donation_camp WHERE donation_record.PID=people.PID AND donation_record.BDCID=blood_donation_camp.BDCID",
+      `SELECT DID, don_rec.PID, full_name, don_rec.BDCID, don_rec.BLID, donation_date, blood_type,
+      CASE
+        WHEN don_rec.BDCID IS NULL THEN branch_name
+        ELSE camp_name
+      END AS branch_camp_name
+      FROM (SELECT DID, PID, BDCID, BLID, donation_date, blood_type FROM donation_record LIMIT ?, 50) AS don_rec
+      INNER JOIN people ON don_rec.PID=people.PID
+      LEFT JOIN blood_donation_camp ON don_rec.BDCID=blood_donation_camp.BDCID
+      LEFT JOIN blood_bank ON don_rec.BLID=blood_bank.BLID`,
+      (0*50),
       function (error, result, fields) {
         if (error) {
           console.log(error);

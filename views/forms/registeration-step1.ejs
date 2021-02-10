@@ -205,12 +205,12 @@
                               <script>document.getElementById("<%=gender%>").checked = "true"</script>
                             <div class="row justify-content-left">
                                 <div class="col-sm-6">
-                                  <div class="label-form">
+                                  <div class="label-form d-flex justify-content-start">
                                       <label>Date of Birth</label>
                                   </div>
                                 </div>
                                 <div class="col-sm-6">
-                                    <div class="input-form">
+                                    <div class="input-form d-flex justify-content-start">
 										<% let max_date = new Date();
 										   max_date = (max_date.getFullYear()-12)+'-'+('0'+(max_date.getMonth()+1)).slice(-2)+'-'+('0'+(max_date.getDate())).slice(-2);
 										%>
