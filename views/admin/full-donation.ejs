@@ -69,17 +69,25 @@
                                         <td><%=donation[0].full_name%></td>
                                     </tr>
                                     <tr>
-                                        <td>Donated at</td>
-                                        <td><%=donation[0].BDCID%></td>
-                                    </tr>
-                                    <tr>
                                         <td>Blood Bag ID</td>
                                         <td><input type="text" size="10" name="bbid"placeholder="<%=donation[0].BBID%>" value="<%=donation[0].BBID%>" required disabled class="editable"></td>
                                     </tr>
 
                                     <tr>
 										<td>Blood Type</td>
-										<td><input type="text" size="10" name="blood_type"placeholder="<%=donation[0].blood_type%>" value="<%=donation[0].blood_type%>" required disabled class="editable"></td>
+										<td>
+                                            <select id="blood_group_select" name="blood_type" required disabled class="editable dis-select">
+        										<option value="A+">A+</option>
+        										<option value="AB+">AB+</option>
+        										<option value="B+">B+</option>
+        										<option value="O+">O+</option>
+        										<option value="A-">A-</option>
+        										<option value="AB-">AB-</option>
+        										<option value="B-">B-</option>
+        										<option value="O-">O-</option>
+    									    </select>
+			                                <script>document.getElementById("blood_group_select").value="<%=donation[0].blood_group%>";</script>
+                                        </td>
 									</tr>
                                     <tr>
                                         <td>Donation Date</td>
@@ -189,8 +197,8 @@
     <script src="../assets/js/jquery.magnific-popup.js"></script>
 
     <!-- Nice-select, sticky -->
-    <script src="../assets/js/jquery.nice-select.min.js"></script>
-    <script src="../assets/js/jquery.sticky.js"></script>
+    <!-- <script src="../assets/js/jquery.nice-select.min.js"></script> -->
+    <!-- <script src="../assets/js/jquery.sticky.js"></script> -->
 
     <!-- contact js -->
     <script src="../assets/js/contact.js"></script>

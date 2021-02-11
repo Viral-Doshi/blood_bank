@@ -13,12 +13,13 @@ const getPid = (req, res, next) => {
           }
           else if(typeof req.body.name==="undefined" && result.length==0){
             req.session.pid=-1;
+            req.session.phone_number=phone;
             delete req.session.user_exist;
             next();
           }
           else if(result.length==0){
             console.log("not found");
-            
+
             var users={
               full_name: req.body.name,
               blood_group: req.body.blood_type,

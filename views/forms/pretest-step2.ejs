@@ -61,17 +61,17 @@
 						                      <%if(link_freez>0) {%>
 						                          <li><a href="registeration-step1.html">Registeration</a></li>
 						                      <%} else {%>
-						                          <li><a>Registeration-f</a></li>
+						                          <li class="freez"><a>Registeration</a></li>
 						                      <%}
 						                        if(link_freez>1) {%>
 						                          <li><a href="pretest-step2.html">Pre-Examination</a></li>
 						                      <%} else {%>
-						                          <li><a>Pre-Examination-f</a></li>
+						                          <li class="freez"><a>Pre-Examination</a></li>
 						                      <%}
 						                        if(link_freez>2) {%>
 						                          <li><a href="donation-step3.html">Donation</a></li>
 						                      <%} else {%>
-						                          <li><a>Donation-f</a></li>
+						                          <li class="freez"><a>Donation</a></li>
 						                      <%}%>
 						                    </ul>
 										</nav>
@@ -182,11 +182,11 @@
 										<div class="radio-wrapper">
 											<div class="select-radio">
 												<div class="radio">
-													<input id="haemoglobin-1" name="hg_level" type="radio" value="1">
+													<input id="haemoglobin-1" name="hg_level" type="radio" value="1" required>
 													<label for="haemoglobin-1" class="radio-label">Normal</label>
 												</div>
 												<div class="radio">
-													<input id="haemoglobin-0" name="hg_level" type="radio" value="0">
+													<input id="haemoglobin-0" name="hg_level" type="radio" value="0" required>
 													<label for="haemoglobin-0" class="radio-label">Not Normal</label>
 												</div>
 											</div>
@@ -204,11 +204,11 @@
 										<div class="radio-wrapper">
 											<div class="select-radio">
 												<div class="radio">
-													<input id="BP-1" name="bp_level" type="radio" value="1">
+													<input id="BP-1" name="bp_level" type="radio" value="1" required>
 													<label for="BP-1" class="radio-label">Normal</label>
 												</div>
 												<div class="radio">
-													<input id="BP-0" name="bp_level" type="radio" value="0">
+													<input id="BP-0" name="bp_level" type="radio" value="0" required>
 													<label for="BP-0" class="radio-label">Not Normal</label>
 												</div>
 											</div>
@@ -226,11 +226,11 @@
 										<div class="radio-wrapper">
 											<div class="select-radio">
 												<div class="radio">
-													<input id="temp-1" name="temp_level" type="radio" value="1">
+													<input id="temp-1" name="temp_level" type="radio" value="1" required>
 													<label for="temp-1" class="radio-label">Normal</label>
 												</div>
 												<div class="radio">
-													<input id="temp-0" name="temp_level" type="radio" value="0">
+													<input id="temp-0" name="temp_level" type="radio" value="0" required>
 													<label for="temp-0" class="radio-label">Not Normal</label>
 												</div>
 											</div>
@@ -248,15 +248,15 @@
 										<div class="radio-wrapper">
 											<div class="select-radio">
 												<div class="radio">
-													<input id="pulse-1" name="pulse" type="radio" value="1">
+													<input id="pulse-1" name="pulse" type="radio" value="1" required>
 													<label for="pulse-1" class="radio-label">Normal</label>
 												</div>
 												<div class="radio">
-													<input id="pulse-0" name="pulse" type="radio" value="0">
+													<input id="pulse-0" name="pulse" type="radio" value="0" required>
 													<label for="pulse-0" class="radio-label">Not Normal</label>
 												</div>
 											</div>
-											<%if(haemoglobin!="") {%>
+											<%if(link_freez==3) {%>
 												<script>document.getElementById("haemoglobin-<%=haemoglobin%>").checked = "true"</script>
 												<script>document.getElementById("BP-<%=BP%>").checked = "true"</script>
 												<script>document.getElementById("temp-<%=temp%>").checked = "true"</script>

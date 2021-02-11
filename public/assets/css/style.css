@@ -2631,6 +2631,18 @@ hero-btn {
     color:#ff1919
 }
 
+.main-header .main-menu ul li.freez > a {
+    color: #523d3d;
+    cursor: default;
+    font-weight: 300;
+
+}
+
+.main-header .main-menu ul li.freez:hover > a {
+    color: #523d3d;
+    cursor: default;
+}
+
 .main-header .main-menu ul ul.submenu {
     position: absolute;
     width: 170px;

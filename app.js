@@ -55,18 +55,20 @@ app.get(
     var user = req.session.user_exist;
     var p = 0;
     if (typeof user === "undefined") p = 1;
-    if (p)
+    if(p) {
       res.render("forms/registeration-step1", {
         logged: req.session.admin,
         full_name: "",
         email: "",
-        phone_number: "",
-        blood_group: " ",
-        gender: " ",
-        dob: " ",
-        link_freez: req.session.link_freez,
+        phone_number: req.session.phone_number,
+        blood_group: "",
+        gender: "",
+        dob: "",
+        link_freez: 1,
       });
-    else
+      delete req.session.phone_number;
+    }
+    else {
       res.render("forms/registeration-step1", {
         logged: req.session.admin,
         full_name: user[0].full_name,
@@ -77,6 +79,7 @@ app.get(
         dob: user[0].DOB,
         link_freez: req.session.link_freez,
       });
+    }
   }
 );
 

@@ -53,14 +53,18 @@ router.post("/edit-request", async (req, res) => {
 router.post("/edit-donation", async (req, res) => {
   if (req.body.submit == "update") {
     await db.query(
-      "UPDATE donation_record SET BBID=?,blood_type=?,donation_date=? , blood_test1 = ? , blood_test2=?, blood_test3=? WHERE DID=? ;",
+      `UPDATE donation_record
+      LEFT JOIN people ON people.PID=donation_record.PID
+      LEFT JOIN blood_bag ON blood_bag.BBID=donation_record.BBID
+      SET donation_record.BBID=?, people.blood_group=?, donation_date=?, haemoglobin = ?, BP=?, temp=?, pulse=? WHERE DID=? ;`,
       [
         req.body.bbid,
         req.body.blood_type,
         req.body.date,
-        req.body.blood_test1,
-        req.body.blood_test2,
-        req.body.blood_test3,
+        req.body.blood_test_1,
+        req.body.blood_test_2,
+        req.body.blood_test_3,
+        req.body.blood_test_4,
         req.body.DID,
       ],
       function (error, results, fields) {
@@ -227,7 +231,7 @@ router.post("/received", async (req, res) => {
     BBID:req.body.BBID,
     blood_group:req.body.blood_group,
   }
-  
+
   db.query(
     "UPDATE blood_bag SET available=0,donated=1 WHERE BBID=? ;",
     req.body.BBID,
@@ -238,7 +242,7 @@ router.post("/received", async (req, res) => {
       } else {
         console.log("here at update in people ");
         console.log("Rows affected:", results.affectedRows);
-        
+
       }
     }
   );
@@ -257,7 +261,7 @@ router.post("/received", async (req, res) => {
       }
     }
   );
-  
+
 });
 
 module.exports = router;

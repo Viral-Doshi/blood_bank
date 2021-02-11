@@ -26,7 +26,10 @@ router.post("/search", getPid, async (req, res) => {
   console.log("date is", today);
   console.log("inside search");
   req.session.link_freez = 0;
-  if (p == -1) res.redirect("/data-entry");
+  if (p == -1) {
+      //user doesnot exsists .. redirect him to registration
+      res.redirect("/registeration-step1.html");
+  }
   else {
     await db.query(
       `SELECT donation_record.*, people.blood_group, people.full_name FROM
