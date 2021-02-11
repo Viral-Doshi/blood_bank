@@ -96,7 +96,7 @@
                                             <label for="haemo-normal" class="mr-50">Normal</label>
                                             <input id="haemo-not-normal" type="radio" name="blood_test_1" value="0" disabled class="editable">
                                             <label for="haemo-not-normal">Not-Normal</label>
-          								    <%if(donation[0].blood_test1=="1"){%>
+          								    <%if(donation[0].haemoglobin=="1"){%>
           									  <script>document.getElementById("haemo-normal").checked = "true";</script>
           								    <%}else {%>
           									  <script>document.getElementById("haemo-not-normal").checked = "true";</script>
@@ -110,7 +110,7 @@
                                             <label for="bp-normal" class="mr-50">Normal</label>
                                             <input id="bp-not-normal" type="radio" name="blood_test_2" value="0" disabled class="editable">
                                             <label for="bp-not-normal">Not-Normal</label>
-          								    <%if(donation[0].blood_test2=="1"){%>
+          								    <%if(donation[0].BP=="1"){%>
           									  <script>document.getElementById("bp-normal").checked = "true";</script>
           								    <%}else {%>
           									  <script>document.getElementById("bp-not-normal").checked = "true";</script>
@@ -124,7 +124,7 @@
                                             <label for="temperature-normal" class="mr-50">Normal</label>
                                             <input id="temperature-not-normal" type="radio" name="blood_test_3" value="0" disabled class="editable">
                                             <label for="temperature-not-normal">Not-Normal</label>
-          								    <%if(donation[0].blood_test3=="1"){%>
+          								    <%if(donation[0].temp=="1"){%>
           									  <script>document.getElementById("temperature-normal").checked = "true";</script>
           								    <%}else {%>
           									  <script>document.getElementById("temperature-not-normal").checked = "true";</script>
@@ -138,7 +138,7 @@
                                             <label for="pulse-normal" class="mr-50">Normal</label>
                                             <input id="pulse-not-normal" type="radio" name="blood_test_4" value="0" disabled class="editable">
                                             <label for="pulse-not-normal">Not-Normal</label>
-          								    <%if(donation[0].blood_test4=="1"){%>
+          								    <%if(donation[0].pulse=="1"){%>
           									  <script>document.getElementById("pulse-normal").checked = "true";</script>
           								    <%}else {%>
           									  <script>document.getElementById("pulse-not-normal").checked = "true";</script>

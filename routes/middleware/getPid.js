@@ -2,7 +2,7 @@ const session = require("express-session");
 const mysql = require("mysql");
 const db = require("../../config/db.js");
 const getPid = (req, res, next) => {
-    
+
     phone=req.body.phone;
 
     db.query(
@@ -18,7 +18,7 @@ const getPid = (req, res, next) => {
           }
           else if(result.length==0){
             console.log("not found");
-             
+            
             var users={
               full_name: req.body.name,
               blood_group: req.body.blood_type,
@@ -29,7 +29,7 @@ const getPid = (req, res, next) => {
               password:"no password",
               gender: req.body.gender,
               user_type: "normal",
-            }
+            };
 
             db.query(
               "INSERT INTO people SET ?",
@@ -40,24 +40,20 @@ const getPid = (req, res, next) => {
                 }
                 else
                 {
-                  
-                console.log("inserted into peop;e=",result);  
-                req.session.pid=result.insertId;
-                console.log("req,session.pid=",req.session.pid);
-                next();
+                    console.log("inserted into people=",result);
+                    req.session.pid=result.insertId;
+                    console.log("req,session.pid=",req.session.pid);
+                    next();
                 }
               }
-            )
-
-            
-            
+            );
           }
           else {
             console.log("getting pid",result);
-           
 
-            
-            
+
+
+
             console.log("at pid");
             req.session.pid=result[0].PID;
             req.session.user_exist=result;
@@ -65,7 +61,7 @@ const getPid = (req, res, next) => {
             };
           });
 
-          
+
 
 };
 

@@ -39,7 +39,12 @@ app.get("/", async (req, res) => {
 
 // get data-entry
 app.get("/data-entry", [checkIfLogged, checkIfdataEntry], async (req, res) => {
-  res.render("forms/index", { logged: req.session.admin });
+  res.render("forms/index", {
+      logged: req.session.admin,
+      link_freez: (typeof req.session.link_freez=="undefined")?0:req.session.link_freez
+  });
+  console.log("inside data-entry4543");
+  console.log((typeof req.session.link_freez=="undefined")?0:req.session.link_freez);
 });
 
 // registration step 1
@@ -59,6 +64,7 @@ app.get(
         blood_group: " ",
         gender: " ",
         dob: " ",
+        link_freez: req.session.link_freez,
       });
     else
       res.render("forms/registeration-step1", {
@@ -69,6 +75,7 @@ app.get(
         blood_group: user[0].blood_group,
         gender: user[0].gender,
         dob: user[0].DOB,
+        link_freez: req.session.link_freez,
       });
   }
 );
@@ -90,6 +97,11 @@ app.get(
       blood_group: p,
       gender: " ",
       dob: " ",
+      haemoglobin: req.session.haemoglobin,
+      BP: req.session.BP,
+      temp: req.session.temp,
+      pulse: req.session.pulse,
+      link_freez: req.session.link_freez,
     });
   }
 );
@@ -101,6 +113,10 @@ app.get(
   async (req, res) => {
     res.render("forms/donation-step3", {
       logged: req.session.admin,
+      full_name: req.session.full_name,
+      blood_group: req.session.blood_group,
+      PID: req.session.pid,
+      link_freez: req.session.link_freez,
     });
   }
 );

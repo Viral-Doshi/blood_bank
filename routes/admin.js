@@ -344,7 +344,6 @@ router.get("/add-bloodbank.html", async (req, res) => {
 
 router.post("/add-bloodbank.html", async (req, res) => {
   var bloodbank = {
-    LID: 1,
     branch_name: req.body.name,
     branch_location: req.body.location,
     contact_number: req.body.contact,
