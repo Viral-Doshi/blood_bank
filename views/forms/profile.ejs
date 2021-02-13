@@ -288,10 +288,10 @@
                         </div>
                         <div class="row justify-content-between">
 
-                                <p class="col-xs-4">Hemoglobin : <%if(donations[i].blood_test1=="1"){%> Normal <%} else {%> Not Normal <%}%></p>
-                                <p class="col-xs-4">BP : <%if(donations[i].blood_test2=="1"){%> Normal <%} else {%> Not Normal <%}%></p>
-                                <p class="col-xs-4">Temprature : <%if(donations[i].blood_test3=="1"){%> Normal <%} else {%> Not Normal <%}%></p>
-                                <p class="col-xs-4">Pulse : <%if(donations[i].blood_test4=="1"){%> Normal <%} else {%> Not Normal <%}%></p>
+                                <p class="col-xs-4">Hemoglobin : <%if(donations[i].haemoglobin=="1"){%> Normal <%} else {%> Not Normal <%}%></p>
+                                <p class="col-xs-4">BP : <%if(donations[i].BP=="1"){%> Normal <%} else {%> Not Normal <%}%></p>
+                                <p class="col-xs-4">Temprature : <%if(donations[i].temp=="1"){%> Normal <%} else {%> Not Normal <%}%></p>
+                                <p class="col-xs-4">Pulse : <%if(donations[i].pulse=="1"){%> Normal <%} else {%> Not Normal <%}%></p>
                         </div>
                         <div class="row justify-content-between">
                                 <!-- <p class="col-xs-4">Location : </p> -->
@@ -310,7 +310,7 @@
                                 <p class="col-xs-6"> Amount-Requested : <%=requests[i].quantity%></p>
                         </div>
                         <div class="row justify-content-between">
-							<p class="col-xs-4">Receiver's Name : <%=info.name%></p>
+							<p class="col-xs-4">Receiver's Name : <%=requests[i].receiver_name%></p>
                                 <p class="col-xs-4">Receiver's Blood Type : <%=requests[i].blood_group%></p>
                                 <p class="col-xs-4">Status : <%if(requests[i].accepted=="1"){%> Accepted <%} else if(requests[i].accepted=="-1"){%> Rejected <%} else {%> Unread <%}%></p>
                         </div>

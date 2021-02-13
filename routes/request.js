@@ -36,6 +36,7 @@ router.post("/submit", upload.array("image"), async (req, res) => {
   );
   var url = imgurl.url;
   var request = {
+    receiver_name: req.body.name,
     blood_group: req.body.blood_type,
     quantity: req.body.units,
     PID: req.session.user,

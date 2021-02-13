@@ -101,52 +101,38 @@
 						<tr>
 							<!-- pass the requestID to full-request.html which will than show every details of record -->
 							<td>&#9993;</td>
-							<td class="bold">Full Name</td>
-							<td class="bold">Blood Type</td>
+							<td class="bold">Receiver's Name</td>
+							<td class="bold">Blood Group</td>
 							<td class="bold">Quantity</td>
-							<td class="bold">Date</td>
+							<td class="bold">Date-Time Requested</td>
 						</tr>
 
 
 						<%for(var i=0;i<requests.length;i++){%>
-							<script>
-								 status="Pending";
-						   </script>
-							<% if(requests[i].accepted==0){ %>
-								<script>
-									 status="Pending";
-								</script>
-								<%}%>
-
-								<% if(requests[i].accepted==1){ %>
-									<script>
-										 status="Accepted";
-									</script>
-									<%}%>
-
-									<% if(requests[i].accepted==-1){ %>
-										<script>
-											status="Rejected";
-										</script>
-										<%}%>
 							<tr>
 								<!-- pass the requestID to full-request.html which will than show every details of record -->
 								<td>
 									<% if(requests[i].accepted==0){ %>
+										<script>status="Pending";</script>
 										<a href="/showrequest/<%=requests[i].REID%>" target="_blank" class="r-status-new">&#9993;</a>
 									<%}
 									 else if(requests[i].accepted==1){ %>
+										 <script>status="Accepted";</script>
 										<a href="/showrequest/<%=requests[i].REID%>" target="_blank" class="r-status-acc">&#x2713;</a>
 									<%}
 									 else if(requests[i].accepted==-1){ %>
+										 <script>status="Rejected";</script>
 										<a href="/showrequest/<%=requests[i].REID%>" target="_blank" class="r-status-rej">&#10005;</a>
 									<%}%>
 								</td>
 								<%console.log(requests[i].REID)%>
-								<td><%=requests[i].full_name%></td>
+								<td><%=requests[i].receiver_name%></td>
 								<td><%=requests[i].blood_group%></td>
 								<td><%=requests[i].quantity%></td>
-								<td><%=('0'+(requests[i].request_date.getDate())).slice(-2)%>-<%=('0'+(requests[i].request_date.getMonth()+1)).slice(-2)%>-<%=requests[i].request_date.getFullYear()%></td>
+								<td>
+									<%=('0'+(requests[i].request_date.getDate())).slice(-2)%>-<%=('0'+(requests[i].request_date.getMonth()+1)).slice(-2)%>-<%=requests[i].request_date.getFullYear()%>
+									 - <%=requests[i].request_date.getHours()%>:<%=requests[i].request_date.getMinutes()%>hrs
+								</td>
 							</tr>
 							<%}%>
 

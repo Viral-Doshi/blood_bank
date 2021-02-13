@@ -28,11 +28,13 @@ function hide_fields() {
 
 		assign(document.getElementById("receiver-name"), "none");
 		assign(document.getElementById("receiver-profile"), "none");
+		assign(document.getElementById("receiver-date"), "none");
 	}
 	else{
 
 		assign(document.getElementById("receiver-name"), "table-row");
 		assign(document.getElementById("receiver-profile"), "table-row");
+		assign(document.getElementById("receiver-date"), "table-row");
 
 	}
 }

@@ -16,9 +16,17 @@ const upload = require("./middleware/multerMiddleware");
 
 router.post("/edit-request", async (req, res) => {
   if (req.body.submit == "update") {
+    var request={
+        receiver_name : req.body.receiver_name,
+        blood_group : req.body.blood_group,
+        quantity : req.body.quantity,
+        purpose : req.body.purpose,
+        accepted : req.body.status,
+        REID : req.body.REID
+    };
     await db.query(
-      "UPDATE request SET blood_group=?,quantity=?,accepted=? WHERE REID=? ;",
-      [req.body.blood_group, req.body.quantity, req.body.status, req.body.REID],
+      "UPDATE request SET ?",
+      request,
       function (error, results, fields) {
         if (error) {
           console.log(error);
@@ -228,19 +236,18 @@ router.post("/received", async (req, res) => {
     REID:req.body.REID,
     received_date:req.body.received_date,
     amount:req.body.amount,
-    BBID:req.body.BBID,
-    blood_group:req.body.blood_group,
+    BBID:req.body.BBID
   }
 
   db.query(
-    "UPDATE blood_bag SET available=0,donated=1 WHERE BBID=? ;",
+    `UPDATE blood_bag SET status="donated" WHERE BBID=? ;`,
     req.body.BBID,
     function (error, results, fields) {
       if (error) {
         console.log(error);
         res.send("error");
       } else {
-        console.log("here at update in people ");
+        console.log("here donated blood bag");
         console.log("Rows affected:", results.affectedRows);
 
       }

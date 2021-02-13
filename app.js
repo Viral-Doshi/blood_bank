@@ -298,7 +298,8 @@ app.get(
   [checkIfLogged, checkIfAdmin],
   async (req, res) => {
     await db.query(
-      "SELECT REID,full_name, request.blood_group, quantity , request_date,accepted FROM people , request WHERE people.PID = request.PID",
+      `SELECT REID, receiver_name, request.blood_group, quantity, request_date, accepted
+      FROM people, request WHERE people.PID = request.PID`,
       function (error, result, fields) {
         if (error) {
           console.log(error);
@@ -468,11 +469,23 @@ app.get(
           console.log(error);
           res.redirect("/admin/index_admin.html");
         } else {
-          res.render("admin/received-record", {
-            logged: req.session.admin,
-            record: result,
-            REID:req.params["id"],
-          });
+          await db.query(
+            `SELECT BBID, blood_group FROM blood_bag WHERE status="available";`,
+            async (error, valid_BBID, fields) => {
+                if (error) {
+                  console.log(error);
+                  res.redirect("/admin/index_admin.html");
+                } else {
+                    console.log(valid_BBID);
+                    res.render("admin/received-record", {
+                      logged: req.session.admin,
+                      record: result,
+                      valid_BBID: valid_BBID,
+                      REID:req.params["id"],
+                    });
+                }
+            }
+          );
         }
       }
     );
@@ -535,13 +548,45 @@ app.get(
     );
   }
 );
-
+//"/admin-donation.html/:id" this is for donations related to a camp
 app.get(
   "/admin-donation.html/:id",
   [checkIfLogged, checkIfAdmin],
   async (req, res) => {
     await db.query(
-      "SELECT * FROM donation_record,people WHERE donation_record.BDCID=? AND donation_record.PID=people.PID",
+      `SELECT DID, donation_record.PID, donation_record.BDCID, full_name, camp_name AS branch_camp_name, blood_group, donation_date FROM donation_record
+      INNER JOIN people ON donation_record.PID=people.PID
+      INNER JOIN blood_donation_camp ON donation_record.BDCID=blood_donation_camp.BDCID
+      WHERE donation_record.BDCID=? ;`,
+      req.params["id"],
+      function (error, result, fields) {
+        if (error) {
+          console.log(error);
+        } else {
+          res.render("admin/admin-donation", {
+            logged: req.session.admin,
+            donations: result,
+          });
+        }
+      }
+    );
+  }
+);
+//"/person-donations/:id" this is for donations done by a particular person
+app.get(
+  "/person-donations/:id",
+  [checkIfLogged, checkIfAdmin],
+  async (req, res) => {
+    await db.query(
+        `SELECT DID, don_rec.PID, full_name, don_rec.BDCID, don_rec.BLID, donation_date, blood_group,
+        CASE
+          WHEN don_rec.BDCID IS NULL THEN branch_name
+          ELSE camp_name
+        END AS branch_camp_name
+        FROM (SELECT DID, PID, BDCID, BLID, donation_date FROM donation_record WHERE PID=?) AS don_rec
+        INNER JOIN people ON don_rec.PID=people.PID
+        LEFT JOIN blood_donation_camp ON don_rec.BDCID=blood_donation_camp.BDCID
+        LEFT JOIN blood_bank ON don_rec.BLID=blood_bank.BLID`,
       req.params["id"],
       function (error, result, fields) {
         if (error) {
@@ -623,6 +668,30 @@ app.get(
   async (req, res) => {
     await db.query(
       "SELECT * FROM blood_bag,donation_record WHERE  blood_bag.BLID=? AND blood_bag.BBID=donation_record.BBID",
+      req.params["id"],
+      async (error, result, fields) => {
+        if (error) {
+          console.log(error);
+          res.redirect("/");
+        } else {
+          res.render("admin/admin-bloodbag", {
+            logged: req.session.admin,
+            blood_bag: result,
+          });
+        }
+      }
+    );
+  }
+);
+
+app.get(
+  "/admin/camp-bloodbag/:id",
+  [checkIfLogged, checkIfAdmin],
+  async (req, res) => {
+    await db.query(
+      `SELECT blood_bag.*, donation_date FROM blood_bag
+      INNER JOIN donation_record ON blood_bag.BBID=donation_record.BBID
+      WHERE donation_record.BDCID=? ;`,
       req.params["id"],
       async (error, result, fields) => {
         if (error) {

@@ -197,7 +197,7 @@
                               <tr>
                                 <td>Previous Donations</td>
 								<%if(peoples[0].isdonor) {%>
-                                	<td><a href = "">link to donations</a></td>
+                                	<td><a href = "/person-donations/<%=peoples[0].PID%>">link to donations</a></td>
 								<%} else {%>
                                 	<td>Never Donated</td>
 								<%}%>
@@ -205,7 +205,7 @@
 							  <tr>
                                 <td>Previous Requests</td>
 								<%if(peoples[0].isdonor) {%>
-                                	<td><a href = "#">link to requests</a></td>
+                                	<td><a href = "">link to requests</a></td>
 								<%} else {%>
                                 	<td>Never Requested</td>
 								<%}%>

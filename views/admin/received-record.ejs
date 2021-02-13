@@ -17,7 +17,7 @@
 	<link rel="stylesheet" href="../../assets/css/fontawesome-all.min.css">
 	<link rel="stylesheet" href="../../assets/css/themify-icons.css">
 	<link rel="stylesheet" href="../../assets/css/slick.css">
-	<link rel="stylesheet" href="../../assets/css/nice-select.css">
+	<!-- <link rel="stylesheet" href="../../assets/css/nice-select.css"> -->
 	<link rel="stylesheet" href="../../assets/css/style.css">
 	<!-- special file -->
 	<link rel="stylesheet" href="../../assets/css/login-form.css">
@@ -40,7 +40,7 @@
 	<header>
 	</header>
 	<main>
-		<section class="login-form-area section-bg  pt-115 pb-120 fix">
+		<section class="login-form-area section-bg  pt-50 pb-120 mb-100 fix">
 			<div class="container">
 				<div class="row justify-content-center">
 					<!-- login wrapper -->
@@ -50,22 +50,21 @@
 							<div class="row">
 								<div class="col-lg-12">
 									<!-- Section Tittle -->
-									<div class="section-tittle mb-50">
+									<div class="section-tittle">
 										<h2>Received Bloodbag</h2>
-										<p>Verify and assign bloodbag.</p>
 									</div>
 								</div>
 							</div>
 							<!-- add database query in record-editor.js -->
 							<!-- this is dummy form there is no 'submit' button -->
-							<form action="/edit/received" method="POST">
+							<form autocomplete="off" action="/edit/received" method="POST">
 								<input type="hidden" style="width:500px;" name="REID" value="<%=REID%>">
 								<table class="table table-striped record">
 									<tr>
 										<td>BloodbagID</td>
 										<td>Received On</td>
 										<td>Amount Received</td>
-										<td>Blood Group</td>
+										<!-- <td>Blood Group</td> -->
 										<td class="icon-delete">Delete</td>
 									</tr>
 									<%for(var i=0;i<record.length;i++){%>
@@ -77,16 +76,53 @@
 										<td><input type="text" size="10" placeholder="BloodbagID" value="<%=record[i].BBID%>" required disabled class="editable"></td>
 										<td><input type="date" size="10" value="<%=record[i].received_date.getFullYear()%>-<%=('0'+(record[i].received_date.getMonth()+1)).slice(-2)%>-<%=('0'+(record[i].received_date.getDate())).slice(-2)%>" required disabled class="editable"></td>
 										<td><input type="text" size="10" placeholder="Amount" value="<%=record[i].amount%>" required disabled class="editable"></td>
-										<td><input type="text" size="3" placeholder="Blood Group" value="<%=record[i].blood_group%>" required disabled class="editable"></td>
+										<!-- <td>
+											<select id="blood_group_select" name="blood_group" required disabled class="editable dis-select">
+												<option value="A+">A+</option>
+												<option value="AB+">AB+</option>
+												<option value="B+">B+</option>
+												<option value="O+">O+</option>
+												<option value="A-">A-</option>
+												<option value="AB-">AB-</option>
+												<option value="B-">B-</option>
+												<option value="O-">O-</option>
+											</select>
+											<script>document.getElementById("blood_group_select").value="<%=record[i].blood_group%>";</script>
+										</td> -->
 										<td class="icon-delete"><button type="button" onclick="delete_bloodbag()">&#10060;</button></td>
 									</tr>
 									<%}%>
 									<!-- end printing records -->
 									<tr id="new_bloodbag">
-										<td><input type="text" size="10" placeholder="BloodbagID" name="BBID" value="" required disabled class="editable"></td>
+										<td>
+											<input type="text" list="valid_BBID" size="10" placeholder="BBID" name="BBID" value="" required disabled class="editable" autocomplete="off">
+											<style>
+												datalist {
+													height: 100px;
+												}
+											</style>
+											<datalist id="valid_BBID">
+
+												<%for(let i=0;i<valid_BBID.length;i++) {%>
+													<option value="<%=valid_BBID[i].BBID%>"><%=valid_BBID[i].blood_group%></option>
+												<%}%>
+
+											</datalist>
+										</td>
 										<td><input type="date" size="10" placeholder="Received Date" name="received_date" value="" required disabled class="editable"></td>
 										<td><input type="text" size="10" placeholder="Amount" name="amount" value="" required disabled class="editable"></td>
-										<td><input type="text" size="3" placeholder="Blood Group" name="blood_group" value="" required disabled class="editable"></td>
+										<!-- <td>
+											<select id="blood_group_select" name="blood_group" required disabled class="editable dis-select">
+												<option value="A+">A+</option>
+												<option value="AB+">AB+</option>
+												<option value="B+">B+</option>
+												<option value="O+">O+</option>
+												<option value="A-">A-</option>
+												<option value="AB-">AB-</option>
+												<option value="B-">B-</option>
+												<option value="O-">O-</option>
+											</select>
+										</td> -->
 									</tr>
 								</table>
 								<div class="container">
@@ -135,8 +171,8 @@
 	<script src="../../assets/js/jquery.magnific-popup.js"></script>
 
 	<!-- Nice-select, sticky -->
-	<script src="../../assets/js/jquery.nice-select.min.js"></script>
-	<script src="../../assets/js/jquery.sticky.js"></script>
+	<!-- <script src="../../assets/js/jquery.nice-select.min.js"></script> -->
+	<!-- <script src="../../assets/js/jquery.sticky.js"></script> -->
 
 	<!-- contact js -->
 	<script src="../../assets/js/contact.js"></script>

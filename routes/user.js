@@ -181,8 +181,9 @@ router.post("/login", async (req, res) => {
         wrong = false;
         if(req.session.user_type == "normal"){
             res.redirect("/index.html");
+        } else {
+            res.redirect("/user/login-redirect");
         }
-        res.redirect("/user/login-redirect");
       } else {
         wrong = true;
         res.redirect("/user/login");
