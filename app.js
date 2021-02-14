@@ -39,7 +39,12 @@ app.get("/", async (req, res) => {
 
 // get data-entry
 app.get("/data-entry", [checkIfLogged, checkIfdataEntry], async (req, res) => {
-  res.render("forms/index", { logged: req.session.admin });
+  res.render("forms/index", {
+      logged: req.session.admin,
+      link_freez: (typeof req.session.link_freez=="undefined")?0:req.session.link_freez
+  });
+  console.log("inside data-entry4543");
+  console.log((typeof req.session.link_freez=="undefined")?0:req.session.link_freez);
 });
 
 // registration step 1
@@ -50,17 +55,20 @@ app.get(
     var user = req.session.user_exist;
     var p = 0;
     if (typeof user === "undefined") p = 1;
-    if (p)
+    if(p) {
       res.render("forms/registeration-step1", {
         logged: req.session.admin,
         full_name: "",
         email: "",
-        phone_number: "",
-        blood_group: " ",
-        gender: " ",
-        dob: " ",
+        phone_number: req.session.phone_number,
+        blood_group: "",
+        gender: "",
+        dob: "",
+        link_freez: 1,
       });
-    else
+      delete req.session.phone_number;
+    }
+    else {
       res.render("forms/registeration-step1", {
         logged: req.session.admin,
         full_name: user[0].full_name,
@@ -69,7 +77,9 @@ app.get(
         blood_group: user[0].blood_group,
         gender: user[0].gender,
         dob: user[0].DOB,
+        link_freez: req.session.link_freez,
       });
+    }
   }
 );
 
@@ -90,6 +100,11 @@ app.get(
       blood_group: p,
       gender: " ",
       dob: " ",
+      haemoglobin: req.session.haemoglobin,
+      BP: req.session.BP,
+      temp: req.session.temp,
+      pulse: req.session.pulse,
+      link_freez: req.session.link_freez,
     });
   }
 );
@@ -101,6 +116,10 @@ app.get(
   async (req, res) => {
     res.render("forms/donation-step3", {
       logged: req.session.admin,
+      full_name: req.session.full_name,
+      blood_group: req.session.blood_group,
+      PID: req.session.pid,
+      link_freez: req.session.link_freez,
     });
   }
 );
@@ -162,7 +181,10 @@ app.get("/blog_details.html", async (req, res) => {
 });
 
 app.get("/donate_now.html", checkIfLogged, async (req, res) => {
-  res.render("donate_now", { logged: req.session.admin });
+  res.render("donate_now", {
+      logged: req.session.admin,
+      info: req.session,
+  });
 });
 
 app.get("/services.html", checkIfLogged, async (req, res) => {
@@ -224,7 +246,7 @@ app.get(
                                   console.log(error);
                                 } else {
                                   req.session.ongoing = results;
-
+                                  console.log(req.session.peoplecount);
                                   res.render("admin/index_admin", {
                                     logged: req.session.admin,
                                     reqcount: req.session.reqcount,
@@ -276,7 +298,8 @@ app.get(
   [checkIfLogged, checkIfAdmin],
   async (req, res) => {
     await db.query(
-      "SELECT REID,full_name, request.blood_group, quantity , request_date,accepted FROM people , request WHERE people.PID = request.PID",
+      `SELECT REID, receiver_name, request.blood_group, quantity, request_date, accepted
+      FROM people, request WHERE people.PID = request.PID`,
       function (error, result, fields) {
         if (error) {
           console.log(error);
@@ -426,6 +449,7 @@ app.get("/showrequest/:id", [checkIfLogged, checkIfAdmin], async (req, res) => {
         if (error) {
           console.log(error);
         } else {
+            console.log(result);
           res.render("admin/full-request", { request: result });
         }
       }
@@ -445,11 +469,23 @@ app.get(
           console.log(error);
           res.redirect("/admin/index_admin.html");
         } else {
-          res.render("admin/received-record", {
-            logged: req.session.admin,
-            record: result,
-            REID:req.params["id"],
-          });
+          await db.query(
+            `SELECT BBID, blood_group FROM blood_bag WHERE status="available";`,
+            async (error, valid_BBID, fields) => {
+                if (error) {
+                  console.log(error);
+                  res.redirect("/admin/index_admin.html");
+                } else {
+                    console.log(valid_BBID);
+                    res.render("admin/received-record", {
+                      logged: req.session.admin,
+                      record: result,
+                      valid_BBID: valid_BBID,
+                      REID:req.params["id"],
+                    });
+                }
+            }
+          );
         }
       }
     );
@@ -462,7 +498,7 @@ app.get(
   async (req, res) => {
     {
       await db.query(
-        "SELECT  * FROM donation_record, people WHERE donation_record.DID = ? AND donation_record.PID = people.PID",
+        "SELECT * FROM donation_record, people WHERE donation_record.DID = ? AND donation_record.PID = people.PID",
         req.params["id"],
         function (error, result, fields) {
           if (error) {
@@ -489,7 +525,16 @@ app.get(
   [checkIfLogged, checkIfAdmin],
   async (req, res) => {
     await db.query(
-      "SELECT * FROM donation_record,people,blood_donation_camp WHERE donation_record.PID=people.PID AND donation_record.BDCID=blood_donation_camp.BDCID",
+      `SELECT DID, don_rec.PID, full_name, don_rec.BDCID, don_rec.BLID, donation_date, blood_group,
+      CASE
+        WHEN don_rec.BDCID IS NULL THEN branch_name
+        ELSE camp_name
+      END AS branch_camp_name
+      FROM (SELECT DID, PID, BDCID, BLID, donation_date FROM donation_record LIMIT ?, 50) AS don_rec
+      INNER JOIN people ON don_rec.PID=people.PID
+      LEFT JOIN blood_donation_camp ON don_rec.BDCID=blood_donation_camp.BDCID
+      LEFT JOIN blood_bank ON don_rec.BLID=blood_bank.BLID`,
+      (0*50),
       function (error, result, fields) {
         if (error) {
           console.log(error);
@@ -503,13 +548,45 @@ app.get(
     );
   }
 );
-
+//"/admin-donation.html/:id" this is for donations related to a camp
 app.get(
   "/admin-donation.html/:id",
   [checkIfLogged, checkIfAdmin],
   async (req, res) => {
     await db.query(
-      "SELECT * FROM donation_record,people WHERE donation_record.BDCID=? AND donation_record.PID=people.PID",
+      `SELECT DID, donation_record.PID, donation_record.BDCID, full_name, camp_name AS branch_camp_name, blood_group, donation_date FROM donation_record
+      INNER JOIN people ON donation_record.PID=people.PID
+      INNER JOIN blood_donation_camp ON donation_record.BDCID=blood_donation_camp.BDCID
+      WHERE donation_record.BDCID=? ;`,
+      req.params["id"],
+      function (error, result, fields) {
+        if (error) {
+          console.log(error);
+        } else {
+          res.render("admin/admin-donation", {
+            logged: req.session.admin,
+            donations: result,
+          });
+        }
+      }
+    );
+  }
+);
+//"/person-donations/:id" this is for donations done by a particular person
+app.get(
+  "/person-donations/:id",
+  [checkIfLogged, checkIfAdmin],
+  async (req, res) => {
+    await db.query(
+        `SELECT DID, don_rec.PID, full_name, don_rec.BDCID, don_rec.BLID, donation_date, blood_group,
+        CASE
+          WHEN don_rec.BDCID IS NULL THEN branch_name
+          ELSE camp_name
+        END AS branch_camp_name
+        FROM (SELECT DID, PID, BDCID, BLID, donation_date FROM donation_record WHERE PID=?) AS don_rec
+        INNER JOIN people ON don_rec.PID=people.PID
+        LEFT JOIN blood_donation_camp ON don_rec.BDCID=blood_donation_camp.BDCID
+        LEFT JOIN blood_bank ON don_rec.BLID=blood_bank.BLID`,
       req.params["id"],
       function (error, result, fields) {
         if (error) {
@@ -591,6 +668,30 @@ app.get(
   async (req, res) => {
     await db.query(
       "SELECT * FROM blood_bag,donation_record WHERE  blood_bag.BLID=? AND blood_bag.BBID=donation_record.BBID",
+      req.params["id"],
+      async (error, result, fields) => {
+        if (error) {
+          console.log(error);
+          res.redirect("/");
+        } else {
+          res.render("admin/admin-bloodbag", {
+            logged: req.session.admin,
+            blood_bag: result,
+          });
+        }
+      }
+    );
+  }
+);
+
+app.get(
+  "/admin/camp-bloodbag/:id",
+  [checkIfLogged, checkIfAdmin],
+  async (req, res) => {
+    await db.query(
+      `SELECT blood_bag.*, donation_date FROM blood_bag
+      INNER JOIN donation_record ON blood_bag.BBID=donation_record.BBID
+      WHERE donation_record.BDCID=? ;`,
       req.params["id"],
       async (error, result, fields) => {
         if (error) {

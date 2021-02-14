@@ -19,24 +19,24 @@
 		<link rel="stylesheet" href="/assets/css/slick.css">
 		<link rel="stylesheet" href="/assets/css/nice-select.css">
 		<link rel="stylesheet" href="/assets/css/style.css">
-    <!-- special file -->
-    <link rel="stylesheet" href="/assets/css/login-form.css">
-    <link rel="stylesheet" href="/assets/css/request-style.css">
+	    <!-- special file -->
+	    <link rel="stylesheet" href="/assets/css/login-form.css">
+	    <link rel="stylesheet" href="/assets/css/request-style.css">
 </head>
 
 <body>
-    <!-- Preloader Start -->
-    <div id="preloader-active">
-        <div class="preloader d-flex align-items-center justify-content-center">
-            <div class="preloader-inner position-relative">
-                <div class="preloader-circle"></div>
-                <div class="preloader-img pere-text">
-                    <img src="/assets/img/logo/loder.jpg" alt="">
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- Preloader Start -->
+
+	<div id="preloader-active">
+		<div class="preloader d-flex align-items-center justify-content-center">
+			<div class="preloader-inner position-relative">
+				<div class="preloader-circle"></div>
+				<div class="preloader-img pere-text">
+					<img src="/assets/img/logo/loder.jpg" alt="">
+				</div>
+			</div>
+		</div>
+	</div>
+
     <header>
   </header>
 	<main>
@@ -70,12 +70,22 @@
                               </tr>
                               <tr>
                                 <td>Phone Number</td>
-                                <td><%=peoples[0].phone_number%></td>
+                                <td>+91 <%=peoples[0].phone_number%></td>
                               </tr>
                               <tr>
                                 <td>Blood Group</td>
                                 <td>
-									<input type="text" size="10" name="blood_group" placeholder="Blood Group" value="<%=peoples[0].blood_group%>" pattern="(A|B|AB|O)[+-]" title="Select a valid Blood Group" required disabled class="editable">
+									<select id="blood_group_select" name="blood_group" required disabled class="editable dis-select">
+										<option value="A+">A+</option>
+										<option value="AB+">AB+</option>
+										<option value="B+">B+</option>
+										<option value="O+">O+</option>
+										<option value="A-">A-</option>
+										<option value="AB-">AB-</option>
+										<option value="B-">B-</option>
+										<option value="O-">O-</option>
+									</select>
+									<script>document.getElementById("blood_group_select").value="<%=peoples[0].blood_group%>";</script>
 								</td>
                               </tr>
                               <tr>
@@ -132,32 +142,62 @@
 								  <%}%>
                                 </td>
                               </tr>
-							  <%if(peoples[0].isdonor) {%>
-                              <tr>
-                                <td>Height</td>
-                                <td><input type="text" name="height" size="15" placeholder="Height (in cms)" value="<%peoples[0].height%>" required disabled class="editable"></td>
-							  </tr>
-                              <tr>
-								<td>Weight</td>
-								<td><input type="text" name="weight" size="15" placeholder="Weight (in kgs)" value="<%=peoples[0].weight%>" required disabled class="editable"></td>
-							  </tr>
-                              <tr>
-                                <td>Next Safe Donation</td>
-                                <td><input type="date" size="10" value="<%=peoples[0].next_donation_date.getFullYear()%>-<%=('0'+(peoples[0].next_donation_date.getMonth()+1)).slice(-2)%>-<%=('0'+(peoples[0].next_donation_date.getDate())).slice(-2)%>" required disabled class="editable"></td>
-							  </tr>
-                              <tr>
-                                <td>Previous Notified</td>
-                                <td><input type="date" size="10" value="<%=peoples[0].previous_sms_date.getFullYear()%>-<%=('0'+(peoples[0].previous_sms_date.getMonth()+1)).slice(-2)%>-<%=('0'+(peoples[0].previous_sms_date.getDate())).slice(-2)%>" required disabled class="editable"></td>
-							  </tr>
-							  <%} else {%>
-							  <tr>
-								<td colspan="2">User never Donated Blood, Height,Weight is not Available</td>
-							  </tr>
+							  <%if(!peoples[0].isdonor) {%>
+								  <tr>
+									<td rowspan="3">Donor</td>
+									<td>Donor Details Not Available</td>
+								  </tr>
+								  <tr>
+									<td>Do you want to add Donor Details?</td>
+								  </tr>
+								  <tr>
+									<td>
+										<input id="add-donor-yes" type="radio" name="add_donor" onclick="toggle_class('show-on-add-donor-yes','table-row');toggle_required('set-require',true)" value="1" disabled class="editable" />
+	                                    <label for="add-donor-yes" class="mr-50">Yes</label>
+	                                    <input id="add-donor-no" type="radio" name="add_donor" onclick="toggle_class('show-on-add-donor-yes','none');toggle_required('set-require',false)" value="0" checked disabled class="editable" />
+	                                    <label for="add-donor-no">No</label>
+									</td>
+								  </tr>
+								  <!-- Hide donor details if donor record not available and radio is no -->
+								  <style>.show-on-add-donor-yes{ display: none; }</style>
 							  <%}%>
+
+                              <tr class="show-on-add-donor-yes">
+                                <td>Height</td>
+								<%if(peoples[0].isdonor) {%>
+                                	<td><input type="text" name="height" size="15" placeholder="Height (in cms)" value="<%=peoples[0].height%>" required disabled class="editable"></td>
+								<%} else {%>
+									<td><input type="text" name="height" size="15" placeholder="Height (in cms)" value="" disabled class="editable set-require"></td>
+								<%}%>
+							  </tr>
+                              <tr class="show-on-add-donor-yes">
+								<td>Weight</td>
+								<%if(peoples[0].isdonor) {%>
+									<td><input type="text" name="weight" size="15" placeholder="Weight (in kgs)" value="<%=peoples[0].weight%>" required disabled class="editable"></td>
+								<%} else {%>
+									<td><input type="text" name="weight" size="15" placeholder="Weight (in kgs)" value="" disabled class="editable set-require"></td>
+								<%}%>
+							  </tr>
+                              <tr class="show-on-add-donor-yes">
+                                <td>Next Safe Donation</td>
+								<%if(peoples[0].isdonor) {%>
+                                	<td><input type="date" name="next_donation_date" size="10" value="<%=peoples[0].next_donation_date.getFullYear()%>-<%=('0'+(peoples[0].next_donation_date.getMonth()+1)).slice(-2)%>-<%=('0'+(peoples[0].next_donation_date.getDate())).slice(-2)%>" required disabled class="editable"></td>
+								<%} else {%>
+									<td><input type="date" name="next_donation_date" size="10" value="" disabled class="editable set-require"></td>
+								<%}%>
+							  </tr>
+                              <tr class="show-on-add-donor-yes">
+                                <td>Previous Notified</td>
+								<%if(peoples[0].isdonor && peoples[0].previous_sms_date != null) {%>
+                                	<td><input type="date" name="previous_sms_date" size="10" value="<%=peoples[0].previous_sms_date.getFullYear()%>-<%=('0'+(peoples[0].previous_sms_date.getMonth()+1)).slice(-2)%>-<%=('0'+(peoples[0].previous_sms_date.getDate())).slice(-2)%>" required disabled class="editable"></td>
+								<%} else {%>
+									<td><input type="date" name="previous_sms_date" size="10" value="" disabled class="editable"></td>
+								<%}%>
+							  </tr>
                               <tr>
                                 <td>Previous Donations</td>
 								<%if(peoples[0].isdonor) {%>
-                                	<td><a href = "#">link to donations</a></td>
+                                	<td><a href = "/person-donations/<%=peoples[0].PID%>">link to donations</a></td>
 								<%} else {%>
                                 	<td>Never Donated</td>
 								<%}%>
@@ -165,7 +205,7 @@
 							  <tr>
                                 <td>Previous Requests</td>
 								<%if(peoples[0].isdonor) {%>
-                                	<td><a href = "#">link to requests</a></td>
+                                	<td><a href = "">link to requests</a></td>
 								<%} else {%>
                                 	<td>Never Requested</td>
 								<%}%>
@@ -189,43 +229,47 @@
 	<footer>
 	</footer>
 
-<!-- JS here -->
-  <!--<script src="/assets/js/header-admin.txt" language="javascript" type="text/javascript"></script>-->
-  <script src="/assets/js/footer-admin.txt" language="javascript" type="text/javascript"></script>
-		<!-- custom script databse changes in this .js files -->
-		<script src="/assets/js/record-editor.js"></script>
-		<script src="/assets/js/full-request-editor.js"></script>
-		<!-- All JS Custom Plugins Link Here here -->
-        <script src="/assets/js/vendor/modernizr-3.5.0.min.js"></script>
-		<!-- Jquery, Popper, Bootstrap -->
-		<script src="/assets/js/vendor/jquery-1.12.4.min.js"></script>
-        <script src="/assets/js/popper.min.js"></script>
-        <script src="/assets/js/bootstrap.min.js"></script>
-	    <!-- Jquery Mobile Menu -->
-        <script src="/assets/js/jquery.slicknav.min.js"></script>
+	<!-- JS here -->
+	<!-- header and footer include -->
+	<script src="/assets/js/plain-header-admin.txt" language="javascript" type="text/javascript"></script>
+	<script src="/assets/js/footer-admin.txt" language="javascript" type="text/javascript"></script>
 
-		<!-- Jquery Slick , Owl-Carousel Plugins -->
-        <script src="/assets/js/owl.carousel.min.js"></script>
-        <script src="/assets/js/slick.min.js"></script>
-		<!-- One Page, Animated-HeadLin -->
-        <script src="/assets/js/wow.min.js"></script>
-		<script src="/assets/js/animated.headline.js"></script>
-		<script src="/assets/js/jquery.magnific-popup.js"></script>
+	<!-- custom script databse changes in this .js files -->
+	<script src="/assets/js/record-editor.js"></script>
+	<script src="/assets/js/full-request-editor.js"></script>
 
-		<!-- Nice-select, sticky -->
-        <script src="/assets/js/jquery.nice-select.min.js"></script>
-		<script src="/assets/js/jquery.sticky.js"></script>
+	<!-- All JS Custom Plugins Link Here here -->
+	<script src="/assets/js/vendor/modernizr-3.5.0.min.js"></script>
+	<!-- Jquery, Popper, Bootstrap -->
+	<script src="/assets/js/vendor/jquery-1.12.4.min.js"></script>
+	<script src="/assets/js/popper.min.js"></script>
+	<script src="/assets/js/bootstrap.min.js"></script>
+	<!-- Jquery Mobile Menu -->
+	<script src="/assets/js/jquery.slicknav.min.js"></script>
 
-        <!-- contact js -->
-        <script src="/assets/js/contact.js"></script>
-        <script src="/assets/js/jquery.form.js"></script>
-        <script src="/assets/js/jquery.validate.min.js"></script>
-        <script src="/assets/js/mail-script.js"></script>
-        <script src="/assets/js/jquery.ajaxchimp.min.js"></script>
+	<!-- Jquery Slick , Owl-Carousel Plugins -->
+	<script src="/assets/js/owl.carousel.min.js"></script>
+	<script src="/assets/js/slick.min.js"></script>
+	<!-- One Page, Animated-HeadLin -->
+	<script src="/assets/js/wow.min.js"></script>
+	<script src="/assets/js/animated.headline.js"></script>
+	<script src="/assets/js/jquery.magnific-popup.js"></script>
 
-		<!-- Jquery Plugins, main Jquery -->
-        <script src="/assets/js/plugins.js"></script>
-		<script src="/assets/js/main.js"></script>
+	<!-- Nice-select, sticky -->
+	<!-- <script src="/assets/js/jquery.nice-select.min.js"></script> -->
+	<!-- <script src="/assets/js/jquery.sticky.js"></script> -->
+
+	<!-- contact js -->
+	<script src="/assets/js/contact.js"></script>
+	<script src="/assets/js/jquery.form.js"></script>
+	<script src="/assets/js/jquery.validate.min.js"></script>
+	<script src="/assets/js/mail-script.js"></script>
+	<script src="/assets/js/jquery.ajaxchimp.min.js"></script>
+
+	<!-- Jquery Plugins, main Jquery -->
+	<script src="/assets/js/plugins.js"></script>
+	<script src="/assets/js/main.js"></script>
+
 
 </body>
 </html>

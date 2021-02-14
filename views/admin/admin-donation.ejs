@@ -43,7 +43,7 @@
 		<section id="history" class="d-flex align-items-center mt-50 mb-50">
 			<div class="container display-logged-in ">
 				<h2 class="row d-flex justify-content-center mb-10">Donations Records</h2>
-				<div class="mini-nav">
+				<div class="mini-nav mb-10">
 					<div class="container">
 						<div class="row justify-content-start">
 							<p class="col-xs-3 mr-150">Total Donations : </p>
@@ -99,7 +99,7 @@
 							<!-- pass the requestID to full-request.html which will than show every details of record -->
 							<td>DID</td>
 							<td>Full Name</td>
-							<td>Camp Name</td>
+							<td>Donated at</td>
 							<td>Blood Type</td>
 							<td class="bold">Date</td>
 						</tr>
@@ -111,8 +111,14 @@
 							<tr>
 								<td><a href="/showdonation/<%=donations[i].DID%>" target="_blank" class="r-status-rej"><%=donations[i].DID%></a></td>
 								<td><a href="/admin/full-people.html/<%=donations[i].PID%>" target="_blank"><%=donations[i].full_name%></a></td>
-								<td><a href="/admin/admin-bloodbank.html"><%=donations[i].camp_name%></a></td>
-								<td><%=donations[i].blood_type%></td>
+								<td>
+									<%if(donations[i].BDCID != null) {%>
+										<a href="/admin/full-camps.html/<%=donations[i].BDCID%>" target="_blank"><%=donations[i].branch_camp_name%></a>
+									<%} else {%>
+										<a href="/admin/admin-bloodbank.html" target="_self"><%=donations[i].branch_camp_name%></a>
+									<%}%>
+								</td>
+								<td><%=donations[i].blood_group%></td>
 								<td class="bold"><%=('0'+(donations[i].donation_date.getDate())).slice(-2)%>-<%=('0'+(donations[i].donation_date.getMonth()+1)).slice(-2)%>-<%=donations[i].donation_date.getFullYear()%></td>
 							</tr>
 

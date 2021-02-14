@@ -67,7 +67,7 @@
 		                        <!-- Logo -->
 		                        <div class="col-xl-2 col-lg-2">
 		                            <div class="logo">
-		                                <a href="index.html"><img src="../assets/img/logo/logo.png" alt=""></a>
+		                                <a href="/index.html"><img src="/assets/img/logo/logo.png" alt=""></a>
 		                            </div>
 		                        </div>
 		                        <div class="col-xl-10 col-lg-10">
@@ -140,10 +140,20 @@
           <div class="row d-flex justify-content-center mt-30">
             <h3>Donor Card</h3>
           </div>
-	  <div class="row d-flex justify-content-center">
-	    <!-- Display Donor Card -->
-	    <!-- <img src="..\assets\img\donor-id-card.png" style="height:auto;width:90%;max-width:500px;"> -->
-	  </div>
+		  <div class="row d-flex justify-content-center">
+	  			<!-- Display Donor Card -->
+	  		<div id="download-able" class="card-wrapper d-flex justify-content-center" style="position:relative;">
+	  			<img src="/assets/img/donor-id-card.png" style="height:auto;width:90%;max-width:500px;" />
+	  			<h4 style="top:47.0%;left:8.24%;white-space:nowrap;"> <%=info.name%></h4>
+				<img src='https://api.qrserver.com/v1/create-qr-code/?data=<%=info.user%>' class="qr-code" style="top:47.0%;left:70.24%;" />
+	  			<h4 style="top:67.78%;left:46.58%;"> <%=info.blood%> </h4>
+	  			<h4 style="top:67.78%;left:8.24%;"> <%=info.user%> </h4>
+	  		</div>
+	  		<!-- Donor Card End-->
+		  </div>
+		  <div class="row d-flex justify-content-center mt-50">
+			  <button type="button" class="genric-btn info radius" onclick="save_doc('<%=info.name%> donor_card');">Download Card</button>
+		  </div>
         </div>
       </div>
       <!-- LOGGED IN container End -->
@@ -273,16 +283,18 @@
                         <h4 class="row justify-content-start">Donation</h4>
 
                         <div class="row justify-content-between">
-                                <p class="col-xs-6">Donated On : <%=donations[i].donation_date%> </p>
-                                <p class="col-xs-6"> Amount-Donated : </p>
+                                <p class="col-xs-6">Donated On : <%=('0'+(donations[i].donation_date.getDate())).slice(-2)%>-<%=('0'+(donations[i].donation_date.getMonth()+1)).slice(-2)%>-<%=donations[i].donation_date.getFullYear()%></p>
+                                <!-- <p class="col-xs-6"> Amount-Donated : </p> -->
                         </div>
                         <div class="row justify-content-between">
-                                <p class="col-xs-4">Blood-Test-X : <%=donations[i].blood_test1%> </p>
-                                <p class="col-xs-4">Blood-Test-Y : <%=donations[i].blood_test2%></p>
-                                <p class="col-xs-4">Blood-Test-Z : <%=donations[i].blood_test3%></p>
+
+                                <p class="col-xs-4">Hemoglobin : <%if(donations[i].haemoglobin=="1"){%> Normal <%} else {%> Not Normal <%}%></p>
+                                <p class="col-xs-4">BP : <%if(donations[i].BP=="1"){%> Normal <%} else {%> Not Normal <%}%></p>
+                                <p class="col-xs-4">Temprature : <%if(donations[i].temp=="1"){%> Normal <%} else {%> Not Normal <%}%></p>
+                                <p class="col-xs-4">Pulse : <%if(donations[i].pulse=="1"){%> Normal <%} else {%> Not Normal <%}%></p>
                         </div>
                         <div class="row justify-content-between">
-                                <p class="col-xs-4">Location : </p>
+                                <!-- <p class="col-xs-4">Location : </p> -->
                         </div>
                     </div>
                 </div>
@@ -294,21 +306,29 @@
                          <!-- type of record -->
                         <h4 class="row justify-content-start">Request</h4>
                         <div class="row justify-content-between">
-                                <p class="col-xs-6">Requested On : <%=requests[i].request_date%></p>
+                                <p class="col-xs-6">Requested On : <%=('0'+(requests[i].request_date.getDate())).slice(-2)%>-<%=('0'+(requests[i].request_date.getMonth()+1)).slice(-2)%>-<%=requests[i].request_date.getFullYear()%></p>
                                 <p class="col-xs-6"> Amount-Requested : <%=requests[i].quantity%></p>
                         </div>
                         <div class="row justify-content-between">
+							<p class="col-xs-4">Receiver's Name : <%=requests[i].receiver_name%></p>
                                 <p class="col-xs-4">Receiver's Blood Type : <%=requests[i].blood_group%></p>
-                                <p class="col-xs-4">Receiver's Name : <%=info.name%></p>
-                                <p class="col-xs-4">Status : <%=requests[i].accepted%></p>
+                                <p class="col-xs-4">Status : <%if(requests[i].accepted=="1"){%> Accepted <%} else if(requests[i].accepted=="-1"){%> Rejected <%} else {%> Unread <%}%></p>
                         </div>
                         <div class="row justify-content-between">
-                                <p class="col-xs-4">Amount-Recivied : </p>
+                                <p class="col-xs-4">Purpose : <%=requests[i].purpose%></p>
                         </div>
                     </div>
                 </div>
 								<%}%>
                 <!-- All records ends here -->
+				<%if(donations.length==0 && requests.length==0){%>
+					<!-- nothing to show here -->
+					<div class="container justify-content-center mt-50 mb-50">
+						<div class="text-center d-flex justify-content-center">
+							<h3 style="font-family:monospace;">You Don't have any Past Donations/Requests</h3>
+						</div>
+					</div>
+				<%}%>
           </div>
         </div>
     </section>
@@ -437,6 +457,11 @@
 		}
 </script>
 		<!-- All JS Custom Plugins Link Here here -->
+		<!-- custom js to download donor card image -->
+		<script src="/assets/js/download_able.js"></script>
+		<script src="https://cdn.bootcss.com/dom-to-image/2.6.0/dom-to-image.min.js" ></script>
+		<script src="https://cdn.bootcss.com/FileSaver.js/2014-11-29/FileSaver.min.js"> </script>
+
         <script src="../assets/js/vendor/modernizr-3.5.0.min.js"></script>
 		<!-- Jquery, Popper, Bootstrap -->
 		<script src="../assets/js/vendor/jquery-1.12.4.min.js"></script>

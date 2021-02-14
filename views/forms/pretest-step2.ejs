@@ -57,12 +57,23 @@
 									<div class="main-menu d-none d-lg-block">
 										<nav>
 											<ul id="navigation">
-												<li><a href="data-entry">Home</a></li>
-												<li><a href="registeration-step1.html">Registeration</a></li>
-												<li><a href="pretest-step2.html">Pre-Examination</a></li>
-												<li><a href="donation-step3.html">Donation</a></li>
-												<!-- <li><a href="forms/signup.html"></a></li> -->
-											</ul>
+						                      <li><a href="data-entry">Home</a></li>
+						                      <%if(link_freez>0) {%>
+						                          <li><a href="registeration-step1.html">Registeration</a></li>
+						                      <%} else {%>
+						                          <li class="freez"><a>Registeration</a></li>
+						                      <%}
+						                        if(link_freez>1) {%>
+						                          <li><a href="pretest-step2.html">Pre-Examination</a></li>
+						                      <%} else {%>
+						                          <li class="freez"><a>Pre-Examination</a></li>
+						                      <%}
+						                        if(link_freez>2) {%>
+						                          <li><a href="donation-step3.html">Donation</a></li>
+						                      <%} else {%>
+						                          <li class="freez"><a>Donation</a></li>
+						                      <%}%>
+						                    </ul>
 										</nav>
 									</div>
 									<!-- Header-btn -->
@@ -144,9 +155,9 @@
 									<div class="col-xs-6">
 										<div class="select-form">
 											<select name="blood_type" required>
-												<option value="" selected>A+</option>
+												<!-- <option value="-1" disabled selected></option> -->
 												<!-- It should show the Blood group mentioned by Donor ( If mentioned ) -->
-												<option id="A+" value="A+" selected>A+</option>
+												<option id="A+" value="A+">A+</option>
 												<option id="A-" value="A-">A-</option>
 												<option id="B+" value="B+">B+</option>
 												<option id="B-" value="B-">B-</option>
@@ -171,12 +182,12 @@
 										<div class="radio-wrapper">
 											<div class="select-radio">
 												<div class="radio">
-													<input id="radio-1" name="hg_level" type="radio" value="1">
-													<label for="radio-1" class="radio-label">Normal</label>
+													<input id="haemoglobin-1" name="hg_level" type="radio" value="1" required>
+													<label for="haemoglobin-1" class="radio-label">Normal</label>
 												</div>
 												<div class="radio">
-													<input id="radio-2" name="hg_level" type="radio" value="0">
-													<label for="radio-2" class="radio-label">Not Normal</label>
+													<input id="haemoglobin-0" name="hg_level" type="radio" value="0" required>
+													<label for="haemoglobin-0" class="radio-label">Not Normal</label>
 												</div>
 											</div>
 										</div>
@@ -193,12 +204,12 @@
 										<div class="radio-wrapper">
 											<div class="select-radio">
 												<div class="radio">
-													<input id="radio-3" name="bp_level" type="radio" value="1">
-													<label for="radio-3" class="radio-label">Normal</label>
+													<input id="BP-1" name="bp_level" type="radio" value="1" required>
+													<label for="BP-1" class="radio-label">Normal</label>
 												</div>
 												<div class="radio">
-													<input id="radio-4" name="bp_level" type="radio" value="0">
-													<label for="radio-4" class="radio-label">Not Normal</label>
+													<input id="BP-0" name="bp_level" type="radio" value="0" required>
+													<label for="BP-0" class="radio-label">Not Normal</label>
 												</div>
 											</div>
 										</div>
@@ -215,12 +226,12 @@
 										<div class="radio-wrapper">
 											<div class="select-radio">
 												<div class="radio">
-													<input id="radio-5" name="temp_level" type="radio" value="1">
-													<label for="radio-5" class="radio-label">Normal</label>
+													<input id="temp-1" name="temp_level" type="radio" value="1" required>
+													<label for="temp-1" class="radio-label">Normal</label>
 												</div>
 												<div class="radio">
-													<input id="radio-6" name="temp_level" type="radio" value="0">
-													<label for="radio-6" class="radio-label">Not Normal</label>
+													<input id="temp-0" name="temp_level" type="radio" value="0" required>
+													<label for="temp-0" class="radio-label">Not Normal</label>
 												</div>
 											</div>
 										</div>
@@ -237,14 +248,20 @@
 										<div class="radio-wrapper">
 											<div class="select-radio">
 												<div class="radio">
-													<input id="radio-7" name="pulse" type="radio" value="1">
-													<label for="radio-7" class="radio-label">Normal</label>
+													<input id="pulse-1" name="pulse" type="radio" value="1" required>
+													<label for="pulse-1" class="radio-label">Normal</label>
 												</div>
 												<div class="radio">
-													<input id="radio-8" name="pulse" type="radio" value="0">
-													<label for="radio-8" class="radio-label">Not Normal</label>
+													<input id="pulse-0" name="pulse" type="radio" value="0" required>
+													<label for="pulse-0" class="radio-label">Not Normal</label>
 												</div>
 											</div>
+											<%if(link_freez==3) {%>
+												<script>document.getElementById("haemoglobin-<%=haemoglobin%>").checked = "true"</script>
+												<script>document.getElementById("BP-<%=BP%>").checked = "true"</script>
+												<script>document.getElementById("temp-<%=temp%>").checked = "true"</script>
+												<script>document.getElementById("pulse-<%=pulse%>").checked = "true"</script>
+											<%}%>
 										</div>
 									</div>
 								</div>

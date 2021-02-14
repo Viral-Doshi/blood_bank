@@ -51,7 +51,7 @@
 						<td colspan="2">Blood Bank :</td>
 						<td>Total Donors here : </td>
 						<td>Total Receiviers here :</td>
-						
+
 					</tr>
 					<tr>
 						<td>A+ : </td>
@@ -71,7 +71,7 @@
 					<div class="container">
 						<div class="row justify-content-start">
 							<p class="col-xs-3 mr-150">&#10227;</p>
-							<p class="col-xs-3 mr-150">1-3 out of 3</p>
+							<p class="col-xs-3 mr-150">1-<%=blood_bag.length%> out of <%=blood_bag.length%></p>
 							<p class="col-xs-3">&#8592;</p>
 							<p class="col-xs-3">&#8594;</p>
 							<p class="col-xs-3 ml-150">
@@ -119,24 +119,29 @@
 				</div>
 				<div class="scroll-box">
 					<table class="table table-striped record">
-						<!-- start displaying records -->
-						<!-- Stored Blood Bags -->
+						<tr>
+							<td>Status</td>
+							<td class="bold">BBID</td>
+							<td>Blood Group</td>
+							<td>Donation Date</td>
+						</tr>
 						<%for(var i=0;i<blood_bag.length;i++){%>
 						<tr>
-							<%if(blood_bag[i].available==1){%>
-							<td><a href="/admin/full-bloodbag.html/<%=blood_bag[i].BBID%>" class="r-status-acc">Available</a></td>
-							<%}%>
-							<% if(blood_bag[i].donated==1){%>
-								<td><a href="/admin/full-bloodbag.html/<%=blood_bag[i].BBID%>" class="r-status-new">supplied</a></td>
+							<td>
+								<%if(blood_bag[i].status=="available"){%>
+									<a href="/admin/full-bloodbag.html/<%=blood_bag[i].BBID%>" class="r-status-acc mx-auto my-auto">Available</a>
+								<%}
+								else if(blood_bag[i].status=="donated"){%>
+									<a href="/admin/full-bloodbag.html/<%=blood_bag[i].BBID%>" class="r-status-new mx-auto my-auto">Supplied</a>
+								<%}
+								else {%>
+									<a href="/admin/full-bloodbag.html/<%=blood_bag[i].BBID%>" class="r-status-rej mx-auto my-auto">Discarded</a>
 								<%}%>
-								<%if(blood_bag[i].rejected==1){%>
-									<td><a href="/admin/full-bloodbag.html/<%=blood_bag[i].BBID%>" class="r-status-rej">Discarded</a></td>
-									<%}%>	
+							</td>
+							<td class="bold"><%=blood_bag[i].BBID%></td>
 							<td><%=blood_bag[i].blood_group%></td>
-							<td class="bold"><%=('0'+(blood_bag[i].donation_date.getDate())).slice(-2)%>-<%=('0'+(blood_bag[i].donation_date.getMonth()+1)).slice(-2)%>-<%=blood_bag[i].donation_date.getFullYear()%></td>
+							<td><%=('0'+(blood_bag[i].donation_date.getDate())).slice(-2)%>-<%=('0'+(blood_bag[i].donation_date.getMonth()+1)).slice(-2)%>-<%=blood_bag[i].donation_date.getFullYear()%></td>
 						</tr>
-						
-						
 						<%}%>
 					</table>
 					<!-- All records ends here -->

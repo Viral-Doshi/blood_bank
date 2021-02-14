@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title>Admin Home </title>
+    <title>Camp Details </title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -65,6 +65,11 @@
                                         <td><%= request[0].BDCID %></td>
                                     </tr>
                                     <tr>
+                                        <td>Camp Name</td>
+                                        <td><input name="camp_name" type="text" size="60" value="<%=request[0].camp_name%>" required
+                                                disabled class="editable"></td>
+                                    </tr>
+                                    <tr>
                                         <td>Start Date</td>
                                         <td><input name="camp_start" type="date" value="<%=request[0].camp_start.getFullYear()%>-<%=('0'+(request[0].camp_start.getMonth()+1)).slice(-2)%>-<%=('0'+(request[0].camp_start.getDate())).slice(-2)%>"  required
                                                 disabled class="editable"></td>
@@ -98,7 +103,7 @@
                                     </tr>
                                     <tr>
                                         <td>All Blood Bags Info.</td>
-                                        <td><a href="admin-bloodbag.html" target="_self">link to bloodbags</a></td>
+                                        <td><a href="/admin/camp-bloodbag/<%=request[0].BDCID%>" target="_self">link to bloodbags</a></td>
                                     </tr>
                                     <tr>
                                         <td>Comments</td>

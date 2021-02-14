@@ -36,11 +36,13 @@ router.post("/submit", upload.array("image"), async (req, res) => {
   );
   var url = imgurl.url;
   var request = {
+    receiver_name: req.body.name,
     blood_group: req.body.blood_type,
     quantity: req.body.units,
     PID: req.session.user,
     accepted: 0,
     uploaded_file: url,
+    purpose: req.body.message,
   };
 
   await db.query(
@@ -79,7 +81,8 @@ router.get("/sendmails", checkIfLogged, async (req, res) => {
         res.redirect("/");
       } else {
         console.log(result);
-        for (var i = 0; i < 5; i++) {
+        //for (var i = 0; i < 5; i++) {
+        for (var i = 0; false; i++) {
           var mailOptions = {
             from: "2019284@iiitdmj.ac.in",
             to: result[i].email,

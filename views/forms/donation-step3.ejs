@@ -61,7 +61,6 @@
 												<li><a href="registeration-step1.html">Registeration</a></li>
 												<li><a href="pretest-step2.html">Pre-Examination</a></li>
 												<li><a href="donation-step3.html">Donation</a></li>
-												<!-- <li><a href="forms/signup.html"></a></li> -->
 											</ul>
 										</nav>
 									</div>
@@ -109,16 +108,18 @@
 				<button id="finishBtn" >Finish</button>
 			</div>
 		</div> -->
-		<!-- Display Donor Card -->
-		<br><br><br>
-		<div class="row d-flex justify-content-center">
-		<!-- Display Donor Card -->
-		<div class="card-wrapper d-flex justify-content-center" style="position:relative;">
-			<img src="..\assets\img\donor-id-card.png" style="height:auto;width:90%;max-width:500px;">
-			<h4 style="top:47.0%;left:8.24%;"> Donor Name </h4>
-			<h4 style="top:67.78%;left:46.58%;"> B+ </h4>
-			<h4 style="top:67.78%;left:8.24%;"> 252-25-225 </h4>
-		</div>
+		<div class="container">
+			<!-- Display Donor Card -->
+			<div class="row d-flex justify-content-center mt-100">
+			<!-- Display Donor Card -->
+				<div class="card-wrapper d-flex justify-content-center" style="position:relative;">
+					<img src="/assets/img/donor-id-card.png" style="height:auto;width:90%;max-width:500px;">
+					<h4 style="top:47.0%;left:8.24%;"> <%=full_name%> </h4>
+					<img src='https://api.qrserver.com/v1/create-qr-code/?data=<%=PID%>' class="qr-code" style="top:47.0%;left:70.24%;" />
+					<h4 style="top:67.78%;left:46.58%;"> <%=blood_group%></h4>
+					<h4 style="top:67.78%;left:8.24%;"> <%=PID%> </h4>
+				</div>
+			</div>
 		</div>
 		<!-- Donor Card End-->
 		<section class="login-form-area section-bg  pt-35 pb-120 fix">

@@ -56,7 +56,7 @@
         <div class="mini-nav">
           <div class="container">
             <div class="row justify-content-start">
-              <a href="" target="_self"><p class="col-xs-3 mr-150">&#10227;</p></a>
+              <p class="col-xs-3 mr-150"><a href="/admin/admin-people.html" target="_self" class="btn-primary btn-sm">&#10227;</a></p>
               <p class="col-xs-3 mr-150">1-<%=peoples.length %> out of <%=peoples.length %></p>
               <p class="col-xs-3">&#8592;</p>
               <p class="col-xs-3">&#8594;</p>
@@ -79,7 +79,7 @@
 									    </div>
 									    <div class="form-group d-flex justify-content-between">
 												<label class="d-flex mr-15" for="filter">Filters</label>
-											
+
 												<label class="d-flex mr-10 checkbox-inline"><input name="filter" class="d-flex mt-2 mr-1" type="radio" value="normal">Normal</label>
 												<label class="d-flex mr-10 checkbox-inline"><input name="filter" class="d-flex mt-2 mr-1" type="radio" value="data-entry">Data-entry</label>
 												<label class="d-flex mr-10 checkbox-inline"><input name="filter" class="d-flex mt-2 mr-1" type="radio" value="admin">Admin</label>
@@ -103,17 +103,17 @@
               <td class="bold">Full Name</td>
               <td class="bold">PID</td>
               <td class="bold">User-Type</td>
-              <td class="bold" >Date</td>
+              <td class="bold">Phone Number</td>
             </tr>
 
             <%for(var i=0;i<peoples.length;i++){%>
               <tr>
                 <!-- pass the requestID to full-request.html which will than show every details of record -->
-                <td><a href="/admin/full-people.html/<%=peoples[i].PID%>" target="_blank"><img src="../../assets/img/profile.png" alt=""></a></td>
-                <td><%=peoples[i].full_name%></td>
+                <td><a href="/admin/full-people.html/<%=peoples[i].PID%>" target="_blank"><img src="/assets/img/profile.png" alt=""></a></td>
+                <td> <%=peoples[i].full_name%></td>
                 <td> <%=peoples[i].PID%></td>
                 <td> <%=peoples[i].user_type%></td>
-                <td> <%=('0'+(peoples[i].DOB.getDate())).slice(-2)%>-<%=('0'+(peoples[i].DOB.getMonth()+1)).slice(-2)%>-<%=peoples[i].DOB.getFullYear()%></td>
+                <td> +91 <%=peoples[i].phone_number%></td>
               </tr>
               <%}%>
 

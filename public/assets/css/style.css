@@ -2631,6 +2631,18 @@ hero-btn {
     color:#ff1919
 }
 
+.main-header .main-menu ul li.freez > a {
+    color: #523d3d;
+    cursor: default;
+    font-weight: 300;
+
+}
+
+.main-header .main-menu ul li.freez:hover > a {
+    color: #523d3d;
+    cursor: default;
+}
+
 .main-header .main-menu ul ul.submenu {
     position: absolute;
     width: 170px;
@@ -6846,11 +6858,27 @@ b, sup, sub, u, del {
     font-family: monospace;
     color: black;
 }
+.card-wrapper img.qr-code{
+    position:absolute;
+    max-width:70px;
+    max-height:70px;
+}
 
 @media (max-width: 400px){
   .card-wrapper h4{
       font-size: 14px;
   }
+  .card-wrapper img.qr-code{
+      max-width: 60px;
+      max-height: 60px;
+  }
+}
+
+@media (max-width: 330px){
+    .card-wrapper img.qr-code{
+        max-width: 50px;
+        max-height: 50px;
+    }
 }
 
 

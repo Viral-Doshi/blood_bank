@@ -69,36 +69,89 @@
                                         <td><%=donation[0].full_name%></td>
                                     </tr>
                                     <tr>
-                                        <td>Donated at</td>
-                                        <td>Blood Camp/ Bank Name</td>
-                                    </tr>
-                                    <tr>
                                         <td>Blood Bag ID</td>
                                         <td><input type="text" size="10" name="bbid"placeholder="<%=donation[0].BBID%>" value="<%=donation[0].BBID%>" required disabled class="editable"></td>
                                     </tr>
-                                   
+
                                     <tr>
 										<td>Blood Type</td>
-										<td><input type="text" size="10" name="blood_type"placeholder="<%=donation[0].blood_type%>" value="<%=donation[0].blood_type%>" required disabled class="editable"></td>
+										<td>
+                                            <select id="blood_group_select" name="blood_type" required disabled class="editable dis-select">
+        										<option value="A+">A+</option>
+        										<option value="AB+">AB+</option>
+        										<option value="B+">B+</option>
+        										<option value="O+">O+</option>
+        										<option value="A-">A-</option>
+        										<option value="AB-">AB-</option>
+        										<option value="B-">B-</option>
+        										<option value="O-">O-</option>
+    									    </select>
+			                                <script>document.getElementById("blood_group_select").value="<%=donation[0].blood_group%>";</script>
+                                        </td>
 									</tr>
                                     <tr>
                                         <td>Donation Date</td>
-                                        <td><input type="date" size="10" name="date" value="<%=donation[0].donation_date%>" required disabled class="editable"></td>
+                                        <td><input type="date" size="10" name="date" value="<%=donation[0].donation_date.getFullYear()%>-<%=('0'+(donation[0].donation_date.getMonth()+1)).slice(-2)%>-<%=('0'+(donation[0].donation_date.getDate())).slice(-2)%>" required disabled class="editable"></td>
                                     </tr>
                                     <tr>
                                         <td><b>Test Results</b></td>
+                                        <td></td>
                                     </tr>
                                     <tr>
-										<td>Blood Test 1 </td>
-										<td><input type="text" size="10" name="blood_test1" placeholder="test 1" value="<%=donation[0].blood_test1%>" required disabled class="editable"></td>
+										<td>Haemoglobin Level</td>
+										<td>
+                                            <input id="haemo-normal" type="radio" name="blood_test_1" value="1" disabled class="editable">
+                                            <label for="haemo-normal" class="mr-50">Normal</label>
+                                            <input id="haemo-not-normal" type="radio" name="blood_test_1" value="0" disabled class="editable">
+                                            <label for="haemo-not-normal">Not-Normal</label>
+          								    <%if(donation[0].haemoglobin=="1"){%>
+          									  <script>document.getElementById("haemo-normal").checked = "true";</script>
+          								    <%}else {%>
+          									  <script>document.getElementById("haemo-not-normal").checked = "true";</script>
+          								    <%}%>
+                                        </td>
 									</tr>
                                     <tr>
-										<td>Blood Test 2  </td>
-										<td><input type="text" size="10"name="blood_test2" placeholder="test 2" value="<%=donation[0].blood_test2%>" required disabled class="editable"></td>
+										<td>Blood Pressure</td>
+										<td>
+                                            <input id="bp-normal" type="radio" name="blood_test_2" value="1" disabled class="editable">
+                                            <label for="bp-normal" class="mr-50">Normal</label>
+                                            <input id="bp-not-normal" type="radio" name="blood_test_2" value="0" disabled class="editable">
+                                            <label for="bp-not-normal">Not-Normal</label>
+          								    <%if(donation[0].BP=="1"){%>
+          									  <script>document.getElementById("bp-normal").checked = "true";</script>
+          								    <%}else {%>
+          									  <script>document.getElementById("bp-not-normal").checked = "true";</script>
+          								    <%}%>
+                                        </td>
 									</tr>
                                     <tr>
-										<td>Blood Test 3 </td>
-										<td><input type="text" size="10"name="blood_test3" placeholder="test 3" value="<%=donation[0].blood_test3%>" required disabled class="editable"></td>
+										<td>Temperature Level</td>
+										<td>
+                                            <input id="temperature-normal" type="radio" name="blood_test_3" value="1" disabled class="editable">
+                                            <label for="temperature-normal" class="mr-50">Normal</label>
+                                            <input id="temperature-not-normal" type="radio" name="blood_test_3" value="0" disabled class="editable">
+                                            <label for="temperature-not-normal">Not-Normal</label>
+          								    <%if(donation[0].temp=="1"){%>
+          									  <script>document.getElementById("temperature-normal").checked = "true";</script>
+          								    <%}else {%>
+          									  <script>document.getElementById("temperature-not-normal").checked = "true";</script>
+          								    <%}%>
+                                        </td>
+									</tr>
+                                    <tr>
+										<td>Pulse Rate</td>
+										<td>
+                                            <input id="pulse-normal" type="radio" name="blood_test_4" value="1" disabled class="editable">
+                                            <label for="pulse-normal" class="mr-50">Normal</label>
+                                            <input id="pulse-not-normal" type="radio" name="blood_test_4" value="0" disabled class="editable">
+                                            <label for="pulse-not-normal">Not-Normal</label>
+          								    <%if(donation[0].pulse=="1"){%>
+          									  <script>document.getElementById("pulse-normal").checked = "true";</script>
+          								    <%}else {%>
+          									  <script>document.getElementById("pulse-not-normal").checked = "true";</script>
+          								    <%}%>
+                                        </td>
 									</tr>
                                 </table>
                                 <div class="container">
@@ -144,8 +197,8 @@
     <script src="../assets/js/jquery.magnific-popup.js"></script>
 
     <!-- Nice-select, sticky -->
-    <script src="../assets/js/jquery.nice-select.min.js"></script>
-    <script src="../assets/js/jquery.sticky.js"></script>
+    <!-- <script src="../assets/js/jquery.nice-select.min.js"></script> -->
+    <!-- <script src="../assets/js/jquery.sticky.js"></script> -->
 
     <!-- contact js -->
     <script src="../assets/js/contact.js"></script>

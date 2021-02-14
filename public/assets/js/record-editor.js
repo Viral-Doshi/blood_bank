@@ -52,3 +52,10 @@ function toggle_class(class_name, value){
     ele[i].style.display = value;
   }
 }
+
+function toggle_required(class_name, value){
+    var ele = document.getElementsByClassName(class_name);
+    for(let i=0;i<ele.length;i++){
+      ele[i].required = value;
+    }
+}

@@ -16,9 +16,17 @@ const upload = require("./middleware/multerMiddleware");
 
 router.post("/edit-request", async (req, res) => {
   if (req.body.submit == "update") {
+    var request={
+        receiver_name : req.body.receiver_name,
+        blood_group : req.body.blood_group,
+        quantity : req.body.quantity,
+        purpose : req.body.purpose,
+        accepted : req.body.status,
+        REID : req.body.REID
+    };
     await db.query(
-      "UPDATE request SET blood_group=?,quantity=?,accepted=? WHERE REID=? ;",
-      [req.body.blood_group, req.body.quantity, req.body.status, req.body.REID],
+      "UPDATE request SET ?",
+      request,
       function (error, results, fields) {
         if (error) {
           console.log(error);
@@ -53,14 +61,18 @@ router.post("/edit-request", async (req, res) => {
 router.post("/edit-donation", async (req, res) => {
   if (req.body.submit == "update") {
     await db.query(
-      "UPDATE donation_record SET BBID=?,blood_type=?,donation_date=? , blood_test1 = ? , blood_test2=?, blood_test3=? WHERE DID=? ;",
+      `UPDATE donation_record
+      LEFT JOIN people ON people.PID=donation_record.PID
+      LEFT JOIN blood_bag ON blood_bag.BBID=donation_record.BBID
+      SET donation_record.BBID=?, people.blood_group=?, donation_date=?, haemoglobin = ?, BP=?, temp=?, pulse=? WHERE DID=? ;`,
       [
         req.body.bbid,
         req.body.blood_type,
         req.body.date,
-        req.body.blood_test1,
-        req.body.blood_test2,
-        req.body.blood_test3,
+        req.body.blood_test_1,
+        req.body.blood_test_2,
+        req.body.blood_test_3,
+        req.body.blood_test_4,
         req.body.DID,
       ],
       function (error, results, fields) {
@@ -98,8 +110,9 @@ router.post("/edit-camp", async (req, res) => {
 
   if(req.body.submit=='update'){
       await db.query(
-          "UPDATE blood_donation_camp SET camp_start=?,camp_end=?,location=?,comments=? WHERE BDCID=? ;",
+          "UPDATE blood_donation_camp SET camp_name=?,camp_start=?,camp_end=?,location=?,comments=? WHERE BDCID=? ;",
           [
+            req.body.camp_name,
             req.body.camp_start,
             req.body.camp_end,
             req.body.location,
@@ -163,8 +176,14 @@ router.post("/edit-people", async (req, res) => {
               console.log("here at update in people ");
 
               console.log("Rows affected:", results.affectedRows);
+              if(typeof req.body.add_donor == "undefined" || req.body.add_donor == "1") {
+                  if(req.body.previous_sms_date == ""){
+                      req.body.previous_sms_date = null;
+                  }
                db.query(
-                "UPDATE donor SET height=?,weight=?,next_donation_date=?,previous_sms_date=? WHERE PID=? ;",
+                `INSERT INTO donor (height, weight, next_donation_date, previous_sms_date, PID)
+                VALUES (?, ?, ?, ?, ?) ON DUPLICATE KEY
+                UPDATE height=VALUES(height),weight=VALUES(weight),next_donation_date=VALUES(next_donation_date),previous_sms_date=VALUES(previous_sms_date);`,
                 [
                   req.body.height,
                   req.body.weight,
@@ -177,13 +196,13 @@ router.post("/edit-people", async (req, res) => {
                     console.log(error);
                     res.send("error");
                   } else {
-                    console.log("here at update in people ");
+                    console.log("here at update/insert in donor ");
                     console.log("Rows affected:", results.affectedRows);
-                    res.redirect("/admin/admin-people.html");
                   }
                 }
               );
-
+             }
+             res.redirect("/admin/admin-people.html");
             }
           }
         );
@@ -217,21 +236,20 @@ router.post("/received", async (req, res) => {
     REID:req.body.REID,
     received_date:req.body.received_date,
     amount:req.body.amount,
-    BBID:req.body.BBID,
-    blood_group:req.body.blood_group,
+    BBID:req.body.BBID
   }
-  
+
   db.query(
-    "UPDATE blood_bag SET available=0,donated=1 WHERE BBID=? ;",
+    `UPDATE blood_bag SET status="donated" WHERE BBID=? ;`,
     req.body.BBID,
     function (error, results, fields) {
       if (error) {
         console.log(error);
         res.send("error");
       } else {
-        console.log("here at update in people ");
+        console.log("here donated blood bag");
         console.log("Rows affected:", results.affectedRows);
-        
+
       }
     }
   );
@@ -250,7 +268,7 @@ router.post("/received", async (req, res) => {
       }
     }
   );
-  
+
 });
 
 module.exports = router;

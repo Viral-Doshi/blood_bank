@@ -46,23 +46,35 @@
               <!-- Logo -->
               <div class="col-xl-2 col-lg-2">
                 <div class="logo">
-                  <a href="data-entry"><img src="../assets/img/logo/logo.png" alt=""></a>
+                  <a href="data-entry"><img src="/assets/img/logo/logo.png" alt=""></a>
               </div>
           </div>
           <div class="col-xl-10 col-lg-10">
-            <div class="menu-wrapper  d-flex align-items-center justify-content-end">
+            <div class="menu-wrapper d-flex align-items-center justify-content-end">
               <!-- Main-menu -->
+
               <div class="main-menu d-none d-lg-block">
                 <nav>
                   <ul id="navigation">
                     <li><a href="data-entry">Home</a></li>
-                    <li><a href="registeration-step1.html">Registeration</a></li>
-                    <li><a href="pretest-step2.html">Pre-Examination</a></li>
-                    <li><a href="donation-step3.html">Donation</a></li>
-                    <!-- <li><a href="forms/signup.html"></a></li> -->
-                </ul>
-            </nav>
-        </div>
+                    <%if(link_freez>0) {%>
+                        <li><a href="registeration-step1.html">Registeration</a></li>
+                    <%} else {%>
+                        <li class="freez"><a>Registeration</a></li>
+                    <%}
+                      if(link_freez>1) {%>
+                        <li><a href="pretest-step2.html">Pre-Examination</a></li>
+                    <%} else {%>
+                        <li class="freez"><a>Pre-Examination</a></li>
+                    <%}
+                      if(link_freez>2) {%>
+                        <li><a href="donation-step3.html">Donation</a></li>
+                    <%} else {%>
+                        <li class="freez"><a>Donation</a></li>
+                    <%}%>
+                  </ul>
+                </nav>
+              </div>
         <!-- Header-btn -->
         <div class="header-right-btn d-none d-lg-block ml-20">
             <a href="/user/logout" class="btn header-btn">Logout</a>

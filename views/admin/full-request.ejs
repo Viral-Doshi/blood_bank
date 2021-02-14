@@ -59,12 +59,15 @@
 							<!-- form -->
 							<form  action="/edit/edit-request" method="post">
 								<table class="table table-striped record">
-
-									
-										<input type="hidden" style="width:500px;" name="REID" value="<%=request[0].REID%>"   >
-									
-
-
+									<input type="text" name="REID" value="<%=request[0].REID%>" hidden>
+									<tr>
+										<td>Request ID</td>
+										<td><%=request[0].REID%></td>
+									</tr>
+									<tr>
+										<td>Receiver's Name</td>
+										<td><input type="text" name="receiver_name" size="30" value="<%=request[0].receiver_name%>" required disabled class="editable"></td>
+									</tr>
 									<tr>
 										<td>Request Date</td>
 										<td><%=request[0].request_date%></td>
@@ -75,7 +78,19 @@
 									</tr> -->
 									<tr>
 										<td>Receiver's Blood Type</td>
-										<td><input type="text" name="blood_group" size="10" disabled placeholder="Blood Type" value="<%=request[0].blood_group%>" required  class="editable"></td>
+										<td>
+											<select id="blood_group_select" name="blood_group" required disabled class="editable dis-select">
+												<option value="A+">A+</option>
+												<option value="AB+">AB+</option>
+												<option value="B+">B+</option>
+												<option value="O+">O+</option>
+												<option value="A-">A-</option>
+												<option value="AB-">AB-</option>
+												<option value="B-">B-</option>
+												<option value="O-">O-</option>
+											</select>
+											<script>document.getElementById("blood_group_select").value="<%=request[0].blood_group%>";</script>
+										</td>
 									</tr>
 									<tr>
 										<td>Requested Quantity</td>
@@ -87,19 +102,24 @@
 									</tr>
 									<tr>
 										<td>Account Requested</td>
-										<td><a href="/admin/full-people.html/20" target="_self">link to profile</a></td>
+										<td><a href="/admin/full-people.html/<%=request[0].PID%>" target="_self">link to profile</a></td>
 									</tr>
 									<tr>
 										<td>Purpose</td>
-										<td><textarea style="width:500px;" name="purpose" disabled class="editable">Purpose Entered in request by user</textarea></td>
+										<td><textarea style="width:500px;" name="purpose" disabled class="editable"><%=request[0].purpose%></textarea></td>
 									</tr>
 									<tr>
 										<td>Accept Request</td>
 										<td>
-											<input type="radio" name="status" id="accept" name="status" value="1" disabled required class="editable" checked >
+											<input type="radio" name="status" id="accept" name="status" value="1" disabled required class="editable">
 											<label for="accept"  class="mr-50">Accept</label>
-											<input type="radio" name="status" id="reject" name="status" disabled value="-1" required class="editable" >
+											<input type="radio" name="status" id="reject" name="status" value="-1" disabled required class="editable" >
 											<label for="reject">Reject</label>
+											<%if(request[0].accepted == "1"){%>
+		  									  	<script>document.getElementById("accept").checked = "true";</script>
+		  								  	<%}else if(request[0].accepted == "-1"){%>
+		  									  	<script>document.getElementById("reject").checked = "true";</script>
+		  								  	<%}%>
 										</td>
 									</tr>
 									<tr>
@@ -114,9 +134,9 @@
 								<div class="container">
 									<div class="row justify-content-between">
 										<button type="button" onclick="edit_btn()" class="genric-btn info circle" id="btn-edit">Edit</button>
+										<button type="button" onclick="cancel_btn()" class="genric-btn info" id="btn-cancel">Cancel</button>
 										<button type="submit" onclick="return confirm('Do you really want to update?');" name="submit" value="update"  class="genric-btn info" id="btn-update">Update</button>
 										<button type="submit" onclick="return confirm('Do you really want to delete?');" name="submit" value="delete"  class="genric-btn danger" id="btn-delete">Delete</button>
-										<button type="button" onclick="cancel_btn()" class="genric-btn info" id="btn-cancel">Cancel</button>
 									</div>
 								</div>
 							</form>
@@ -158,8 +178,8 @@
 	<script src="/assets/js/jquery.magnific-popup.js"></script>
 
 	<!-- Nice-select, sticky -->
-	<script src="/assets/js/jquery.nice-select.min.js"></script>
-	<script src="/assets/js/jquery.sticky.js"></script>
+	<!-- <script src="/assets/js/jquery.nice-select.min.js"></script> -->
+	<!-- <script src="/assets/js/jquery.sticky.js"></script> -->
 
 	<!-- contact js -->
 	<script src="/assets/js/contact.js"></script>

@@ -42,7 +42,7 @@
 		<section id="history" class="d-flex align-items-center mt-50 mb-50">
 			<div class="container display-logged-in ">
 				<h2 class="row d-flex justify-content-center mb-10">Camps</h2>
-				<div class="mini-nav">
+				<div class="mini-nav mb-10">
 					<div class="container">
 						<div class="row justify-content-start">
 							<p class="col-xs-3 mr-150">Active Camps :  </p>
@@ -99,7 +99,8 @@
 
 						<tr>
 							<td>Camps</td>
-							<td>Camp ID</td>
+							<td>ID</td>
+							<td>Camp Name</td>
 							<td class="bold">Location</td>
 							<td class="bold">Start Date  </td>
 							<td class="bold">End Date </td>
@@ -120,6 +121,7 @@
 									<%}%>
 								</td>
 								<td><%=camps[i].BDCID%></td>
+								<td><%=camps[i].camp_name%></td>
 								<td style="max-width:250px;"><%=camps[i].location%></td>
 								<td class="bold"> <%=('0'+(camps[i].camp_start.getDate())).slice(-2)%>-<%=('0'+(camps[i].camp_start.getMonth()+1)).slice(-2)%>-<%=camps[i].camp_start.getFullYear()%></td>
 								<td class="bold"> <%=('0'+(camps[i].camp_end.getDate())).slice(-2)%>-<%=('0'+(camps[i].camp_end.getMonth()+1)).slice(-2)%>-<%=camps[i].camp_end.getFullYear()%></td>

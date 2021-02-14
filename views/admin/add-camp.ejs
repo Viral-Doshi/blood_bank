@@ -62,7 +62,7 @@
 
                                     <tr>
                                         <td>Camp Name</td>
-                                        <td><input type="text" placeholder="Camp Name" size="50" name="camp_name" pattern="^[a-zA-Z]+(\s[a-zA-Z]+)?$" title="Name only contains Alphabets and blank space" required></td>
+                                        <td><input type="text" placeholder="Camp Name" size="50" name="camp_name" pattern="[A-Za-z ]{1,32}" title="Name only contains Alphabets and blank space" required></td>
                                     </tr>
 
                                     <tr>
@@ -71,7 +71,7 @@
                                     </tr>
                                     <tr>
                                         <td>End Date</td>
-                                        
+
                                         <td><input name="end_date" type="date" placeholder="dd-mm-yyyy" required></td>
                                     </tr>
                                     <tr>

@@ -65,7 +65,19 @@
                                     </tr>
                                     <tr>
                                         <td>Blood Group</td>
-                                        <td><input type="text" size="10" placeholder="Blood Group" value="<%=blood_bag[0].blood_group%>" required disabled class="editable"></td>
+                                        <td>
+                                            <select id="blood_group_select" name="blood_group" required disabled class="editable dis-select">
+        										<option value="A+">A+</option>
+        										<option value="AB+">AB+</option>
+        										<option value="B+">B+</option>
+        										<option value="O+">O+</option>
+        										<option value="A-">A-</option>
+        										<option value="AB-">AB-</option>
+        										<option value="B-">B-</option>
+        										<option value="O-">O-</option>
+			                                </select>
+			                                <script>document.getElementById("blood_group_select").value="<%=blood_bag[0].blood_group%>";</script>
+                                        </td>
                                     </tr>
                                     <tr>
                                         <td>Donor's Name</td>
@@ -77,23 +89,28 @@
                                     </tr>
                                     <tr>
                                         <td>Donation Date</td>
-                                        <td><input type="date" size="10" value="blood_bag[0].donation_date" required disabled class="editable"></td>
+                                        <td><input type="date" size="10" value="<%=blood_bag[0].donation_date.getFullYear()%>-<%=('0'+(blood_bag[0].donation_date.getMonth()+1)).slice(-2)%>-<%=('0'+(blood_bag[0].donation_date.getDate())).slice(-2)%>" required disabled class="editable"></td>
                                     </tr>
                                     <tr>
 										<td>Status</td>
 										<td>
-											<input type="radio" id="avail" name="status" value="Available" checked disabled class="editable" onclick="hide_fields();">
-											<label for="accept" class="mr-50">Available</label>
+											<input type="radio" id="avail" name="status" value="Available" disabled class="editable" onclick="hide_fields();">
+											<label for="avail" class="mr-50">Available</label>
 											<input type="radio" id="don" name="status" value="Donated" disabled class="editable"  onclick="hide_fields();">
-											<label for="reject" class="mr-50">Donated</label>
+											<label for="don" class="mr-50">Donated</label>
                                             <input type="radio" id="dis" name="status" value="Discarded" disabled class="editable"  onclick="hide_fields();">
-                                            <label for="reject">Discarded</label>
-
-
+                                            <label for="dis">Discarded</label>
+                                            <%if(blood_bag[0].status=="available"){%>
+                                                <script>document.getElementById("avail").checked = "true";</script>
+                                            <%} else if(blood_bag[0].status=="donated"){ %>
+                                                <script>document.getElementById("don").checked = "true";</script>
+                                            <%} else {%>
+                                                <script>document.getElementById("dis").checked = "true";</script>
+                                            <%}%>
 										</td>
 									</tr>
 
-                                    <tr id = "receiver-name">
+                                    <tr id="receiver-name">
                                         <td>Receiver's Name</td>
                                         <td>Receiver Name</td>
                                     </tr>
@@ -101,17 +118,17 @@
 										<td>Receiver's Profile</td>
 										<td><a href="full-people.html" target="_self">Link to profile</a></td>
 									</tr>
-                                    <tr>
-                                        <td>Recevied Date</td>
-                                        <td><input type="date" size="10" value="2020-12-31" required disabled class="editable"></td>
+                                    <tr id="receiver-date">
+                                        <td>Supplied On</td>
+                                        <td><input type="date" value="2020-12-31" disabled class="editable"></td>
                                     </tr>
                                 </table>
                                 <div class="container">
                                     <div class="row justify-content-between">
                                         <button type="button" onclick="edit_btn();" class="genric-btn info circle" id="btn-edit">Edit</button>
-                                        <button type="button" onclick="cancel_btn()" class="genric-btn info" id="btn-cancel">Cancel</button>
-                                        <button type="button" onclick="update_btn();" class="genric-btn info" id="btn-update">Update</button>
-                                        <button type="button" onclick="delete_btn()" class="genric-btn danger" id="btn-delete">Delete</button>
+                                        <button type="button" onclick="cancel_btn();hide_fields()" class="genric-btn info" id="btn-cancel">Cancel</button>
+                                        <button type="button" onclick="update_btn();hide_fields()" class="genric-btn info" id="btn-update">Update</button>
+                                        <button type="button" onclick="delete_btn();hide_fields()" class="genric-btn danger" id="btn-delete">Delete</button>
                                     </div>
                                 </div>
                             </form>
@@ -148,8 +165,8 @@
     <script src="../../assets/js/jquery.magnific-popup.js"></script>
 
     <!-- Nice-select, sticky -->
-    <script src="../../assets/js/jquery.nice-select.min.js"></script>
-    <script src="../../assets/js/jquery.sticky.js"></script>
+    <!-- <script src="../../assets/js/jquery.nice-select.min.js"></script> -->
+    <!-- <script src="../../assets/js/jquery.sticky.js"></script> -->
 
     <!-- contact js -->
     <script src="../../assets/js/contact.js"></script>
